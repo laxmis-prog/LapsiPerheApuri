@@ -3,10 +3,10 @@ from itsdangerous import URLSafeTimedSerializer as Serializer, BadSignature, Sig
 from flask import current_app
 from flask_login import UserMixin
 from . import db, login_manager
+from datetime import datetime
 
 class Role(db.Model):
     __tablename__ = 'roles'
-    
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), unique=True)
     users = db.relationship('User', backref='role', lazy='dynamic')
@@ -14,15 +14,20 @@ class Role(db.Model):
     def __repr__(self):
         return '<Role %r>' % self.name
 
+
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
-    
     id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(64), unique=True, index=True, nullable=False)
-    username = db.Column(db.String(64), unique=True, index=True, nullable=False)
+    email = db.Column(db.String(64), unique=True, index=True)
+    username = db.Column(db.String(64), unique=True, index=True)
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
-    password_hash = db.Column(db.String(128))
+    password_hash = db.Column(db.String(256))  # Increase the size of the password_hash column
     confirmed = db.Column(db.Boolean, default=False)
+    name = db.Column(db.String(64))
+    location = db.Column(db.String(64))
+    about_me = db.Column(db.Text())
+    member_since = db.Column(db.DateTime(), default=datetime.utcnow)
+    last_seen = db.Column(db.DateTime(), default=datetime.utcnow)
 
     @property
     def password(self):
@@ -43,43 +48,37 @@ class User(UserMixin, db.Model):
         s = Serializer(current_app.config['SECRET_KEY'])
         try:
             data = s.loads(token.encode('utf-8'))
-        except SignatureExpired:
-            return False  # Token has expired
-        except BadSignature:
-            return False  # Invalid token
-
+        except (BadSignature, SignatureExpired):
+            return False
         if data.get('confirm') != self.id:
             return False
-        
         self.confirmed = True
         db.session.add(self)
-        db.session.commit()  # Commit the session to save changes
         return True
 
     def generate_email_change_token(self, new_email, expiration=3600):
         s = Serializer(current_app.config['SECRET_KEY'], expiration)
-        return s.dumps({'change_email': self.id, 'new_email': new_email}).decode('utf-8')
+        return s.dumps(
+            {'change_email': self.id, 'new_email': new_email}).decode('utf-8')
 
     def change_email(self, token):
         s = Serializer(current_app.config['SECRET_KEY'])
         try:
             data = s.loads(token.encode('utf-8'))
-        except SignatureExpired:
-            return False  # Token has expired
-        except BadSignature:
-            return False  # Invalid token
-
+        except (BadSignature, SignatureExpired):
+            return False
         if data.get('change_email') != self.id:
             return False
-        
         new_email = data.get('new_email')
         if new_email is None or User.query.filter_by(email=new_email).first():
             return False
-        
         self.email = new_email
         db.session.add(self)
-        db.session.commit()  # Commit the session to save changes
         return True
+
+    def ping(self):
+        self.last_seen = datetime.utcnow()
+        db.session.add(self)
 
     def __repr__(self):
         return '<User %r>' % self.username
