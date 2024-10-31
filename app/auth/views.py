@@ -134,12 +134,15 @@ def change_email_request():
             new_email = form.email.data.lower()
             token = current_user.generate_email_change_token(new_email)
             send_email(new_email, 'Confirm your email address',
-                       'auth/email/change_email', user=current_user, token=token)
-            flash('An email with instructions to confirm your new email address has been sent to you.')
+                       'auth/email/change_email',
+                       user=current_user, token=token)
+            flash('An email with instructions to confirm your new email '
+                  'address has been sent to you.')
             return redirect(url_for('main.index'))
         else:
             flash('Invalid email or password.')
     return render_template("auth/change_email.html", form=form)
+
 
 @auth.route('/change_email/<token>')
 @login_required

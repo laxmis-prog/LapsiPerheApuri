@@ -64,20 +64,23 @@ class User(UserMixin, db.Model):
         db.session.add(self)
         return True
 
-    def generate_email_change_token(self, new_email, expiration=3600):
-        s = Serializer(current_app.config['SECRET_KEY'].encode('utf-8'), expiration)
-        return s.dumps({'change_email': self.id, 'new_email': new_email}).decode('utf-8')
+    def generate_email_change_token(self, new_email):
+        s = Serializer(current_app.config['SECRET_KEY'])
+        return s.dumps(
+            {'change_email': self.id, 'new_email': new_email})
 
     def change_email(self, token):
-        s = Serializer(current_app.config['SECRET_KEY'].encode('utf-8'))
+        s = Serializer(current_app.config['SECRET_KEY'])
         try:
-            data = s.loads(token.encode('utf-8'))
-        except (BadSignature, SignatureExpired):
+            data = s.loads(token,max_age=3600)
+        except:
             return False
         if data.get('change_email') != self.id:
             return False
         new_email = data.get('new_email')
-        if new_email is None or User.query.filter_by(email=new_email).first():
+        if new_email is None:
+            return False
+        if self.query.filter_by(email=new_email).first() is not None:
             return False
         self.email = new_email
         db.session.add(self)
