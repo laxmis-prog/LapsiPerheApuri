@@ -5,15 +5,23 @@ from flask_login import UserMixin
 from . import db, login_manager
 from datetime import datetime
 
+class Permission:
+    FOLLOW = 0x01
+    COMMENT = 0x02
+    WRITE_ARTICLES = 0x04
+    MODERATE_COMMENTS = 0x08
+    ADMINISTER = 0x80
+
 class Role(db.Model):
     __tablename__ = 'roles'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), unique=True)
+    default = db.Column(db.Boolean, default=False, index=True)
+    permissions = db.Column(db.Integer)
     users = db.relationship('User', backref='role', lazy='dynamic')
 
     def __repr__(self):
         return '<Role %r>' % self.name
-
 
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
@@ -40,15 +48,15 @@ class User(UserMixin, db.Model):
     def verify_password(self, password):
         return check_password_hash(self.password_hash, password)
 
-    def generate_confirmation_token(self, expiration=3600):
-        s = Serializer(current_app.config['SECRET_KEY'], expiration)
-        return s.dumps({'confirm': self.id}).decode('utf-8')
+    def generate_confirmation_token(self):
+        s = Serializer(current_app.config['SECRET_KEY'])
+        return s.dumps({'confirm': self.id})
 
     def confirm(self, token):
         s = Serializer(current_app.config['SECRET_KEY'])
         try:
-            data = s.loads(token.encode('utf-8'))
-        except (BadSignature, SignatureExpired):
+            data = s.loads(token,max_age=3600)
+        except:
             return False
         if data.get('confirm') != self.id:
             return False
@@ -57,12 +65,11 @@ class User(UserMixin, db.Model):
         return True
 
     def generate_email_change_token(self, new_email, expiration=3600):
-        s = Serializer(current_app.config['SECRET_KEY'], expiration)
-        return s.dumps(
-            {'change_email': self.id, 'new_email': new_email}).decode('utf-8')
+        s = Serializer(current_app.config['SECRET_KEY'].encode('utf-8'), expiration)
+        return s.dumps({'change_email': self.id, 'new_email': new_email}).decode('utf-8')
 
     def change_email(self, token):
-        s = Serializer(current_app.config['SECRET_KEY'])
+        s = Serializer(current_app.config['SECRET_KEY'].encode('utf-8'))
         try:
             data = s.loads(token.encode('utf-8'))
         except (BadSignature, SignatureExpired):
@@ -82,13 +89,6 @@ class User(UserMixin, db.Model):
 
     def __repr__(self):
         return '<User %r>' % self.username
-
-class Permission:
-    FOLLOW = 0x01
-    COMMENT = 0x02
-    WRITE_ARTICLES = 0x04
-    MODERATE_COMMENTS = 0x08
-    ADMINISTER = 0x80
 
 @login_manager.user_loader
 def load_user(user_id):
