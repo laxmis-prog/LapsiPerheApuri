@@ -14,6 +14,11 @@ class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
         'mysql+mysqlconnector://root:@localhost:3306/flasky'
+    UPLOAD_FOLDER = 'profilepicture/'
+    ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+    MAX_CONTENT_LENGTH = 2 * 1024 * 1024
+    KUVAPOLKU = os.path.join(os.path.abspath('.'),UPLOAD_FOLDER)
+    print("KUVAPOLKU: "+KUVAPOLKU)
 
     @staticmethod
     def init_app(app):
