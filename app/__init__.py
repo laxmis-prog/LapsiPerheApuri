@@ -6,6 +6,7 @@ from flask_login import LoginManager
 from flask_bootstrap import Bootstrap
 from flask_migrate import Migrate
 from config import config
+import os
 
 # Initialize extensions
 mail = Mail()
@@ -22,6 +23,11 @@ def create_app(config_name):
     # Load configuration from the specified config_name
     app.config.from_object(config[config_name])
     config[config_name].init_app(app)
+
+    # Ensure the upload folder exists
+    upload_folder = app.config.get('UPLOAD_FOLDER')
+    if upload_folder and not os.path.exists(upload_folder):
+        os.makedirs(upload_folder)
 
     # Initialize extensions with the app
     mail.init_app(app)
