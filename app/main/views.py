@@ -26,15 +26,23 @@ def edit_profile():
         current_user.name = form.name.data
         current_user.location = form.location.data
         current_user.about_me = form.about_me.data
+
+        # Check if a profile picture was uploaded
         if form.profile_picture.data:
             filename = secure_filename(form.profile_picture.data.filename)
             file_path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
             form.profile_picture.data.save(file_path)
+            
+            # Update user's profile picture field
             current_user.profile_picture = filename
+
+        # Save all changes to the database
         db.session.add(current_user)
         db.session.commit()
+        
         flash('Your profile has been updated.')
         return redirect(url_for('main.user', username=current_user.username))
+    
     form.name.data = current_user.name
     form.location.data = current_user.location
     form.about_me.data = current_user.about_me

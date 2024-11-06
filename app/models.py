@@ -34,8 +34,8 @@ class User(UserMixin, db.Model):
     name = db.Column(db.String(64))
     location = db.Column(db.String(64))
     about_me = db.Column(db.Text())
-    member_since = db.Column(db.DateTime(), default=datetime.utcnow)
-    last_seen = db.Column(db.DateTime(), default=datetime.utcnow)
+    member_since = db.Column(db.DateTime(), default=datetime.utcnow)  # Correct indentation
+    last_seen = db.Column(db.DateTime(), default=datetime.utcnow)  # Correct indentation
     profile_picture = db.Column(db.String(128), nullable=True) 
 
     @property
