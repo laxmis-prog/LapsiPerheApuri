@@ -11,11 +11,11 @@
                 <div class="card-body text-center">
                     <!-- Display the profile picture, default if not uploaded -->
                     {% if user.profile_picture %}
-                        <img src="{{ url_for('static', filename='profilepicture/' + user.profile_picture) }}" 
-                             class="img-thumbnail" alt="Profile Picture" width="150" height="150">
+                        <img src="{{ url_for('static', filename=user.profile_picture) }}" 
+                        class="img-thumbnail rounded-circle" alt="Profile Picture" width="150" height="150">
                     {% else %}
                         <img src="{{ url_for('static', filename='default.png') }}" 
-                             class="img-thumbnail" alt="Default Profile Picture" width="150" height="150">
+                        class="img-thumbnail rounded-circle" alt="Default Profile Picture" width="150" height="150">
                     {% endif %}
 
                     <p>
