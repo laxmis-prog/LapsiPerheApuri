@@ -5,7 +5,7 @@ from alembic import context
 
 
 # Import your app here to access its configuration
-from flasky import create_app, db  # Replace with your actual import
+from apuri import create_app, db  # Replace with your actual import
 
 
 def get_engine_url():
