@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, TextAreaField, BooleanField, SelectField,\
+from wtforms import StringField, TextAreaField, DateTimeField, BooleanField, SelectField,\
     SubmitField, FileField
 from wtforms.validators import DataRequired, Length, Email, Regexp
 from wtforms import ValidationError
@@ -9,6 +9,15 @@ from flask_wtf.file import FileAllowed, FileRequired
 class NameForm(FlaskForm):
     name = StringField('What is your name?', validators=[DataRequired()])
     submit = SubmitField('Submit')
+
+class TaskForm(FlaskForm):
+    member_name = StringField('Jäsenen nimi', validators=[Length(max=64)])
+    title = StringField('Otsikko', validators=[DataRequired(), Length(max=128)])
+    description = TextAreaField('Kuvaus')
+    due_date = DateTimeField('Eräpäivä', format='%Y-%m-%d %H:%M:%S')
+    category = StringField('Kategoria', validators=[Length(max=64)])
+    status = SelectField('Tila', choices=[('pending', 'Pending'), ('completed', 'Completed')])
+    submit = SubmitField('Lähetä')
 
 
 class EditProfileForm(FlaskForm):

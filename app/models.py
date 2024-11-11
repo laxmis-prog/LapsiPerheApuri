@@ -23,6 +23,22 @@ class Role(db.Model):
     def __repr__(self):
         return '<Role %r>' % self.name
 
+
+class Task(db.Model):
+    __tablename__ = 'Tasks'
+    task_id = db.Column(db.Integer, primary_key=True)  
+    title = db.Column(db.String(128), nullable=False)
+    description = db.Column(db.Text, nullable=True)
+    due_date = db.Column(db.DateTime, nullable=True)
+    category = db.Column(db.String(64), nullable=True)
+    status = db.Column(db.String(64), default='pending')
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id')) 
+    member_name = db.Column(db.String(64), nullable=True)
+    
+
+    def __repr__(self):
+        return f'<Task {self.title}>'
+
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
@@ -34,9 +50,9 @@ class User(UserMixin, db.Model):
     name = db.Column(db.String(64))
     location = db.Column(db.String(64))
     about_me = db.Column(db.Text())
-    member_since = db.Column(db.DateTime(), default=datetime.utcnow)  # Correct indentation
-    last_seen = db.Column(db.DateTime(), default=datetime.utcnow)  # Correct indentation
-    profile_picture = db.Column(db.String(128), nullable=True) 
+    member_since = db.Column(db.DateTime(), default=datetime.utcnow)
+    last_seen = db.Column(db.DateTime(), default=datetime.utcnow)
+    profile_picture = db.Column(db.String(128), nullable=True)
 
     @property
     def password(self):
@@ -56,7 +72,7 @@ class User(UserMixin, db.Model):
     def confirm(self, token):
         s = Serializer(current_app.config['SECRET_KEY'])
         try:
-            data = s.loads(token,max_age=3600)
+            data = s.loads(token, max_age=3600)
         except:
             return False
         if data.get('confirm') != self.id:
@@ -73,7 +89,7 @@ class User(UserMixin, db.Model):
     def change_email(self, token):
         s = Serializer(current_app.config['SECRET_KEY'])
         try:
-            data = s.loads(token,max_age=3600)
+            data = s.loads(token, max_age=3600)
         except:
             return False
         if data.get('change_email') != self.id:
@@ -90,7 +106,7 @@ class User(UserMixin, db.Model):
     def ping(self):
         self.last_seen = datetime.utcnow()
         db.session.add(self)
-        db.session.commit()  # Ensure the change is committed to the database
+        db.session.commit()
 
     def can(self, permissions):
         return self.role is not None and (self.role.permissions & permissions) == permissions

@@ -27,14 +27,11 @@ def unconfirmed():
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(email=form.email.data.lower()).first()
+        user = User.query.filter_by(email=form.email.data).first()
         if user is not None and user.verify_password(form.password.data):
-            login_user(user, form.remember_me.data)
-            next = request.args.get('next')
-            if next is None or not next.startswith('/'):
-                next = url_for('main.index')
-            return redirect(next)
-        flash('Invalid email or password.')
+            login_user(user, remember=form.remember_me.data)
+            return redirect(url_for('main.tasks'))  # Redirect to tasks page after login
+        flash('Invalid username or password.')
     return render_template('auth/login.html', form=form)
 
 @auth.route('/logout')
