@@ -28,60 +28,38 @@
     </style>
 </head>
 <body>
-    {% block navbar %}
-    <nav class="navbar navbar-expand-lg navbar-light">
-        <div class="container">
-            <a class="navbar-brand" href="{{ url_for('main.index') }}">
-                <i class="fas fa-home"></i> Apuri
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav mr-auto">
-                    {% if current_user.is_authenticated %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('main.index') }}">
-                            <i class="fas fa-home"></i> Home
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('main.user', username=current_user.username) }}">
-                            <i class="fas fa-user"></i> Profile
-                        </a>
-                    </li>
-                    {% endif %}
-                </ul>
-                <ul class="navbar-nav ml-auto">
-                    {% if current_user.is_authenticated %}
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="accountDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-user-circle"></i> Account
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="accountDropdown">
-                            <a class="dropdown-item" href="{{ url_for('auth.change_password') }}">
-                                <i class="fas fa-key"></i> Change Password
+    {% if current_user.is_authenticated %}
+        {% include 'sidebar.html' %}
+    {% else %}
+        {% block navbar %}
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <div class="container">
+                <a class="navbar-brand" href="{{ url_for('main.index') }}">
+                    <i class="fas fa-home"></i> Apuri
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('main.index') }}">
+                                <i class="fas fa-home"></i> Home
                             </a>
-                            <a class="dropdown-item" href="{{ url_for('auth.change_email_request') }}">
-                                <i class="fas fa-envelope"></i> Change Email
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('auth.login') }}">
+                                <i class="fas fa-sign-in-alt"></i> Log In
                             </a>
-                            <a class="dropdown-item" href="{{ url_for('auth.logout') }}">
-                                <i class="fas fa-sign-out-alt"></i> Log Out
-                            </a>
-                        </div>
-                    </li>
-                    {% else %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('auth.login') }}">
-                            <i class="fas fa-sign-in-alt"></i> Log In
-                        </a>
-                    </li>
-                    {% endif %}
-                </ul>
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </div>
-    </nav>
-    {% endblock %}
+        </nav>
+        {% endblock %}
+    {% endif %}
     <div class="container">
         {% block content %}
         {% for message in get_flashed_messages() %}
@@ -95,8 +73,10 @@
         {% block page_content %}{% endblock %}
         {% endblock %}
     </div>
-    <!-- Include Footer -->
-    {% include 'footer.html' %}
+    {% if not current_user.is_authenticated %}
+        <!-- Include Footer -->
+        {% include 'footer.html' %}
+    {% endif %}
     <!-- Bootstrap JS and dependencies -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>

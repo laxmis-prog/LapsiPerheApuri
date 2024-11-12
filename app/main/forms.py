@@ -19,6 +19,12 @@ class TaskForm(FlaskForm):
     status = SelectField('Tila', choices=[('pending', 'Pending'), ('completed', 'Completed')])
     submit = SubmitField('Lähetä')
 
+class FeedbackForm(FlaskForm):
+    name = StringField('Nimi', validators=[DataRequired(), Length(max=64)])
+    email = StringField('Sähköposti', validators=[DataRequired(), Length(max=64)])
+    message = TextAreaField('Viesti', validators=[DataRequired()])
+    submit = SubmitField('Lähetä')
+
 
 class EditProfileForm(FlaskForm):
     name = StringField('Real name', validators=[Length(0, 64)])

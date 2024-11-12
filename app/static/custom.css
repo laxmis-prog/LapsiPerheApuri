@@ -74,3 +74,32 @@ footer a:hover {
   text-decoration: none;
 }
 
+/* Sidebar styles */
+.sidebar {
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 250px;
+  background-color: #B2F1E6; /* Light Blue */
+  padding-top: 20px;
+}
+
+.sidebar a {
+  padding: 10px 15px;
+  text-decoration: none;
+  font-size: 18px;
+  color: #333333; /* Dark Gray for text */
+  display: block;
+}
+
+.sidebar a:hover {
+  background-color: #FFF3B0; /* Light Yellow for hover */
+  color: #000000; /* Black for hover */
+}
+
+.content {
+  margin-left: 250px;
+  padding: 20px;
+}
+

@@ -3,7 +3,7 @@ from flask import render_template, redirect, url_for, flash, current_app, reques
 from werkzeug.utils import secure_filename
 from flask_login import login_required, current_user
 from . import main
-from .forms import TaskForm
+from .forms import TaskForm, FeedbackForm
 from .. import db
 from ..models import User
 from ..models import Task
@@ -31,6 +31,7 @@ def tasks():
         return redirect(url_for('main.tasks'))
     tasks = Task.query.filter_by(user_id=current_user.id).order_by(Task.due_date).all()
     return render_template('tasks.html', form=form, tasks=tasks)
+
 
 @main.route('/tasks/edit/<int:task_id>', methods=['GET', 'POST'])
 @login_required
@@ -67,6 +68,16 @@ def update_task_status(id):
     db.session.commit()
     flash('Task status updated successfully.')
     return redirect(url_for('main.tasks'))
+
+@main.route('/feedback', methods=['GET', 'POST'])
+@login_required
+def feedback():
+    form = FeedbackForm()
+    if form.validate_on_submit():
+        # Handle feedback form submission
+        flash('Feedback submitted successfully.')
+        return redirect(url_for('main.feedback'))
+    return render_template('feedback.html', form=form)
 
 @main.route('/')
 def index():
