@@ -1,24 +1,25 @@
-
 {% if current_user.is_authenticated %}
 <div class="sidebar">
-    <a href="{{ url_for('main.tasks') }}">
-        <i class="fas fa-tasks"></i> Tulevat tehtävät
-    </a>
-    <a href="{{ url_for('main.user', username=current_user.username) }}">
-        <i class="fas fa-user"></i> Profiili
-    </a>
-    <a href="{{ url_for('main.feedback') }}">
-        <i class="fas fa-comment-dots"></i> Palaute
-    </a>
-    <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#account-collapse" aria-expanded="false">
-        <i class="fas fa-user-circle"></i> Tili
-    </button>
-    <div class="collapse" id="account-collapse">
-        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-            <li><a href="{{ url_for('auth.change_password') }}" class="link-body-emphasis d-inline-flex text-decoration-none rounded"><i class="fas fa-key"></i> Vaihda salasana</a></li>
-            <li><a href="{{ url_for('auth.change_email_request') }}" class="link-body-emphasis d-inline-flex text-decoration-none rounded"><i class="fas fa-envelope"></i> Vaihda sähköposti</a></li>
-            <li><a href="{{ url_for('auth.logout') }}" class="link-body-emphasis d-inline-flex text-decoration-none rounded"><i class="fas fa-sign-out-alt"></i> Kirjaudu ulos</a></li>
-        </ul>
-    </div>
+   <a href="{{ url_for('main.tasks') }}">
+       <i class="fas fa-tasks"></i> Tulevat tehtävät
+   </a>
+   <a href="{{ url_for('main.user', username=current_user.username) }}">
+       <i class="fas fa-user"></i> Profiili
+   </a>
+   <a href="{{ url_for('main.feedback') }}">
+       <i class="fas fa-comment-dots"></i> Palaute
+   </a>
+   <a href="{{ url_for('auth.change_password') }}">
+       <i class="fas fa-key"></i> Vaihda salasana
+   </a>
+   <a href="{{ url_for('auth.change_email_request') }}">
+       <i class="fas fa-envelope"></i> Vaihda sähköposti
+   </a>
+   <a href="{{ url_for('auth.logout') }}">
+       <i class="fas fa-sign-out-alt"></i> Kirjaudu ulos
+   </a>
 </div>
 {% endif %}
+
+
+

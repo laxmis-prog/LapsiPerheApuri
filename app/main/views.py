@@ -12,23 +12,33 @@ from .forms import EditProfileForm
 @main.route('/tasks', methods=['GET', 'POST'])
 @login_required
 def tasks():
-    print("Before checking authentication")  # Add a simple print statement before
-    print("User is authenticated:", current_user.is_authenticated)  # This will print in the console.
     form = TaskForm()
+    
     if form.validate_on_submit():
+        print("Form validated successfully")
         task = Task(
+            member_name=form.member_name.data,
             title=form.title.data,
             description=form.description.data,
             due_date=form.due_date.data,
             category=form.category.data,
             status=form.status.data,
-            user_id=current_user.id,
-            member_name=current_user.username 
+            user_id=current_user.id  # Ensure this user ID is captured
         )
         db.session.add(task)
-        db.session.commit()
-        flash('Task created successfully.')
-        return redirect(url_for('main.tasks'))
+        try:
+            db.session.commit()  # Attempt to commit to the database
+            flash('Task created successfully.')
+            return redirect(url_for('main.tasks'))
+        except Exception as e:
+            db.session.rollback()  # Roll back if there's an error
+            flash(f'Error creating task: {e}')  # Display error message
+            print("Error during commit:", e)  # Print error for debugging
+
+    else:
+        if form.errors:
+            print("Form validation errors:", form.errors)  # Show form errors if validation fails
+
     tasks = Task.query.filter_by(user_id=current_user.id).order_by(Task.due_date).all()
     return render_template('tasks.html', form=form, tasks=tasks)
 
@@ -51,23 +61,26 @@ def edit_task(task_id):
     return render_template('edit_task.html', form=form, task=task)
 
 
-@main.route('/tasks/delete/<int:id>', methods=['POST'])
+@main.route('/tasks/delete/<int:task_id>', methods=['POST'])
 @login_required
-def delete_task(id):
-    task = Task.query.get_or_404(id)
+def delete_task(task_id):
+    task = Task.query.get_or_404(task_id)
     db.session.delete(task)
     db.session.commit()
     flash('Task deleted successfully.')
     return redirect(url_for('main.tasks'))
 
-@main.route('/tasks/status/<int:id>', methods=['POST'])
+@main.route('/tasks/update_status/<int:task_id>', methods=['POST'])
 @login_required
-def update_task_status(id):
-    task = Task.query.get_or_404(id)
-    task.status = request.form['status']
-    db.session.commit()
-    flash('Task status updated successfully.')
+def update_task_status(task_id):
+    task = Task.query.get_or_404(task_id)
+    new_status = request.form.get('status')
+    if new_status:
+        task.status = new_status
+        db.session.commit()
+        flash('Task status updated successfully.')
     return redirect(url_for('main.tasks'))
+
 
 @main.route('/feedback', methods=['GET', 'POST'])
 @login_required

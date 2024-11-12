@@ -13,7 +13,7 @@ class Config:
     FLASKY_ADMIN = os.environ.get('FLASKY_ADMIN')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
-        'mysql+mysqlconnector://root:@localhost:3306/apuri'
+         'mysql+mysqlconnector://root:@localhost:3306/apuri'
     UPLOAD_FOLDER = os.path.join(basedir, 'app',  'static')
     ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}  # Allowed image file types
     MAX_CONTENT_LENGTH = 3 * 1024 * 1024  # Limit file upload size to 3 MB

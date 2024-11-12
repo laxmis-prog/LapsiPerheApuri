@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, TextAreaField, DateTimeField, BooleanField, SelectField,\
-    SubmitField, FileField
+    SubmitField, FileField, DateField
 from wtforms.validators import DataRequired, Length, Email, Regexp
 from wtforms import ValidationError
 from ..models import Role, User
@@ -14,7 +14,7 @@ class TaskForm(FlaskForm):
     member_name = StringField('Jäsenen nimi', validators=[Length(max=64)])
     title = StringField('Otsikko', validators=[DataRequired(), Length(max=128)])
     description = TextAreaField('Kuvaus')
-    due_date = DateTimeField('Eräpäivä', format='%Y-%m-%d %H:%M:%S')
+    due_date = DateField('Due Date', format='%Y-%m-%d', validators=[DataRequired()])
     category = StringField('Kategoria', validators=[Length(max=64)])
     status = SelectField('Tila', choices=[('pending', 'Pending'), ('completed', 'Completed')])
     submit = SubmitField('Lähetä')
