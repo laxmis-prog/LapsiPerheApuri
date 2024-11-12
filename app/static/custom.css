@@ -1,0 +1,76 @@
+
+/*Etusivun tyylit*/
+ 
+    /* Gradientti ja yleiset tyylit */
+    .bg-light-gradient {
+      background: linear-gradient(to right, #B2F1E6, #FFF3B0);
+      padding: 2rem;
+      border-radius: 1rem;
+    }
+  
+    /* Ikonien ympyröinti ja korostus */
+    .rounded-circle {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      width: 2.5rem;
+      height: 2.5rem;
+    }
+
+    /* Painikkeiden hover-efekti */
+   .btn-primary {
+   background-color: #FFF3B0; /* Light Yellow */
+   border-color: #FFF3B0; /* Light Yellow */
+   color: #333333; /* Dark Gray for text */
+
+   }
+  
+    /* Painikkeiden hover-efekti */
+    .btn-primary:hover {
+      background-color: #B2F1E6;
+      border-color: #B2F1E6;
+      color: #333333;
+    }
+    .btn-outline-secondary:hover {
+      background-color: #FFF3B0;
+      border-color: #FFF3B0;
+      color: #333333;
+    }
+
+ /* Background color */
+body {
+  background-color: #E6F7FF; /* Very Light Gray */
+}
+
+/* Navbar color */
+.navbar {
+  background-color: #B2F1E6; /* Slightly darker shade of light blue */
+}
+
+.navbar-brand, .nav-link {
+  color: #333333; /* Dark Gray for text */
+}
+
+.nav-link:hover {
+  color: #000000; /* Black for hover */
+}
+
+
+/* Footer color */
+footer {
+  background-color: #FFF3B0; /* Slightly darker shade of light yellow */
+  color: #333333; /* Dark Gray for text */
+  padding: 10px 0;
+  text-align: center;
+}
+
+footer a {
+  color: #333333; /* Dark Gray for text */
+  text-decoration: none;
+}
+
+footer a:hover {
+  color: #000000; /* Black for hover */
+  text-decoration: none;
+}
+
