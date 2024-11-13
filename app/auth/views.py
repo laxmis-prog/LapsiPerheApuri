@@ -95,7 +95,7 @@ def change_password():
             flash('Invalid password.')
     return render_template("auth/change_password.html", form=form)
 
-@auth.route('/reset', methods=['GET', 'POST'])
+@auth.route('/reset_password_request', methods=['GET', 'POST'])
 def password_reset_request():
     if not current_user.is_anonymous:
         return redirect(url_for('main.index'))
@@ -106,7 +106,7 @@ def password_reset_request():
             token = user.generate_reset_token()
             send_email(user.email, 'Reset Your Password',
                        'auth/email/reset_password', user=user, token=token)
-        flash('An email with instructions to reset your password has been sent to you.')
+        flash('Sinulle on lähetetty sähköposti,jossa on ohjeet salasanan nollaamiseksi')
         return redirect(url_for('auth.login'))
     return render_template('auth/reset_password.html', form=form)
 
@@ -118,7 +118,7 @@ def password_reset(token):
     if form.validate_on_submit():
         if User.reset_password(token, form.password.data):
             db.session.commit()
-            flash('Your password has been updated.')
+            flash('Salasanasi on päivitetty.')
             return redirect(url_for('auth.login'))
         else:
             return redirect(url_for('main.index'))

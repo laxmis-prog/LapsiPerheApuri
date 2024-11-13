@@ -60,7 +60,6 @@ class ChangePasswordForm(FlaskForm):
 class PasswordResetRequestForm(FlaskForm):
     email = StringField('Sähköposti', validators=[
         DataRequired(message='Täytä tämä kenttä'),
-        Length(1, 64, message='Sähköpostin on oltava 1-64 merkkiä pitkä'),
         Email(message='Anna kelvollinen sähköpostiosoite')
     ])
     submit = SubmitField('Nollaa salasana')
