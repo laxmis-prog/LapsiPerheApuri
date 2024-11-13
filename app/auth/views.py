@@ -31,7 +31,7 @@ def login():
         if user is not None and user.verify_password(form.password.data):
             login_user(user, remember=form.remember_me.data)
             return redirect(url_for('main.tasks'))  # Redirect to tasks page after login
-        flash('Invalid username or password.')
+        flash('Virheellinen käyttäjänimi tai salasana.')
     return render_template('auth/login.html', form=form)
 
 @auth.route('/logout')

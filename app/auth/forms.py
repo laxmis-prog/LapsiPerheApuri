@@ -4,65 +4,88 @@ from wtforms.validators import DataRequired, Length, Email, Regexp, EqualTo
 from wtforms import ValidationError
 from ..models import User
 
-
 class LoginForm(FlaskForm):
-    email = StringField('Email', validators=[DataRequired(), Length(1, 64),
-                                             Email()])
-    password = PasswordField('Password', validators=[DataRequired()])
-    remember_me = BooleanField('Keep me logged in')
-    submit = SubmitField('Log In')
-
+    email = StringField('Sähköposti', validators=[
+        DataRequired(message='Täytä tämä kenttä'),
+        Email(message='Anna kelvollinen sähköpostiosoite')
+    ])
+    password = PasswordField('Salasana', validators=[
+        DataRequired(message='Täytä tämä kenttä')
+    ])
+    remember_me = BooleanField('Muista minut')
+    submit = SubmitField('Kirjaudu sisään')
 
 class RegistrationForm(FlaskForm):
-    email = StringField('Email', validators=[DataRequired(), Length(1, 64),
-                                             Email()])
-    username = StringField('Username', validators=[
-        DataRequired(), Length(1, 64),
+    email = StringField('Sähköposti', validators=[
+        DataRequired(message='Täytä tämä kenttä'),
+        Length(1, 64, message='Sähköpostin on oltava 1-64 merkkiä pitkä'),
+        Email(message='Anna kelvollinen sähköpostiosoite')
+    ])
+    username = StringField('Käyttäjänimi', validators=[
+        DataRequired(message='Täytä tämä kenttä'),
+        Length(1, 64, message='Käyttäjänimen on oltava 1-64 merkkiä pitkä'),
         Regexp('^[A-Za-z][A-Za-z0-9_.]*$', 0,
-               'Usernames must have only letters, numbers, dots or '
-               'underscores')])
-    password = PasswordField('Password', validators=[
-        DataRequired(), EqualTo('password2', message='Passwords must match.')])
-    password2 = PasswordField('Confirm password', validators=[DataRequired()])
-    submit = SubmitField('Register')
+               'Käyttäjänimessä saa olla vain kirjaimia, numeroita, pisteitä tai alaviivoja.')
+    ])
+    password = PasswordField('Salasana', validators=[
+        DataRequired(message='Täytä tämä kenttä'),
+        EqualTo('password2', message='Salasanojen on oltava samat.')
+    ])
+    password2 = PasswordField('Vahvista salasana', validators=[
+        DataRequired(message='Täytä tämä kenttä')
+    ])
+    submit = SubmitField('Rekisteröidy')
 
     def validate_email(self, field):
         if User.query.filter_by(email=field.data.lower()).first():
-            raise ValidationError('Email already registered.')
+            raise ValidationError('Sähköposti on jo rekisteröity.')
 
     def validate_username(self, field):
         if User.query.filter_by(username=field.data).first():
-            raise ValidationError('Username already in use.')
-
+            raise ValidationError('Käyttäjänimi on jo käytössä.')
 
 class ChangePasswordForm(FlaskForm):
-    old_password = PasswordField('Old password', validators=[DataRequired()])
-    password = PasswordField('New password', validators=[
-        DataRequired(), EqualTo('password2', message='Passwords must match.')])
-    password2 = PasswordField('Confirm new password',
-                              validators=[DataRequired()])
-    submit = SubmitField('Update Password')
-
+    old_password = PasswordField('Vanha salasana', validators=[
+        DataRequired(message='Täytä tämä kenttä')
+    ])
+    password = PasswordField('Uusi salasana', validators=[
+        DataRequired(message='Täytä tämä kenttä'),
+        EqualTo('password2', message='Salasanojen on oltava samat.')
+    ])
+    password2 = PasswordField('Vahvista uusi salasana', validators=[
+        DataRequired(message='Täytä tämä kenttä')
+    ])
+    submit = SubmitField('Päivitä salasana')
 
 class PasswordResetRequestForm(FlaskForm):
-    email = StringField('Email', validators=[DataRequired(), Length(1, 64),
-                                             Email()])
-    submit = SubmitField('Reset Password')
-
+    email = StringField('Sähköposti', validators=[
+        DataRequired(message='Täytä tämä kenttä'),
+        Length(1, 64, message='Sähköpostin on oltava 1-64 merkkiä pitkä'),
+        Email(message='Anna kelvollinen sähköpostiosoite')
+    ])
+    submit = SubmitField('Nollaa salasana')
 
 class PasswordResetForm(FlaskForm):
-    password = PasswordField('New Password', validators=[
-        DataRequired(), EqualTo('password2', message='Passwords must match')])
-    password2 = PasswordField('Confirm password', validators=[DataRequired()])
-    submit = SubmitField('Reset Password')
-
+    password = PasswordField('Uusi salasana', validators=[
+        DataRequired(message='Täytä tämä kenttä'),
+        EqualTo('password2', message='Salasanojen on oltava samat.')
+    ])
+    password2 = PasswordField('Vahvista salasana', validators=[
+        DataRequired(message='Täytä tämä kenttä')
+    ])
+    submit = SubmitField('Nollaa salasana')
 
 class ChangeEmailForm(FlaskForm):
-    email = StringField('New Email', validators=[DataRequired(), Length(1, 64),
-                                                 Email()])
-    password = PasswordField('Password', validators=[DataRequired()])
-    submit = SubmitField('Update Email Address')
+    email = StringField('Uusi sähköposti', validators=[
+        DataRequired(message='Täytä tämä kenttä'),
+        Length(1, 64, message='Sähköpostin on oltava 1-64 merkkiä pitkä'),
+        Email(message='Anna kelvollinen sähköpostiosoite')
+    ])
+    password = PasswordField('Salasana', validators=[
+        DataRequired(message='Täytä tämä kenttä')
+    ])
+    submit = SubmitField('Päivitä sähköpostiosoite')
 
     def validate_email(self, field):
         if User.query.filter_by(email=field.data.lower()).first():
-            raise ValidationError('Email already registered.')
+            raise ValidationError('Sähköposti on jo rekisteröity.')
