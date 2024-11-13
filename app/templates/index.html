@@ -11,7 +11,7 @@
 
 
 <!-- Tervetuloa-osio -->
-<div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-4 shadow-lg bg-light-gradient">
+<div class="welcome-card row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center bg-light-gradient">
     <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
       <h1 class="display-4 fw-bold lh-1 text-primary mb-4">Tervetuloa LapsiPerheApuriin!</h1>
       <p class="lead mb-4">
@@ -20,15 +20,12 @@
       <p class="lead fw-bold mb-3">Miten LapsiPerheApuri auttaa arjessa?</p>
       <ul class="list-unstyled mb-4">
         <li class="d-flex align-items-start mb-3">
-          <span class="me-3 p-2 bg-success rounded-circle text-white"><i class="bi bi-check-circle"></i></span>
           <span><strong>Tehtävälistat ja muistutukset:</strong> Seuraa helposti lapsen tulevia tapahtumia, kuten lääkärikäyntejä, harrastuksia ja muita tärkeitä menoja.</span>
         </li>
         <li class="d-flex align-items-start mb-3">
-          <span class="me-3 p-2 bg-info rounded-circle text-white"><i class="bi bi-person-check"></i></span>
           <span><strong>Yhteistyötä lapsen kanssa:</strong> Yli 7-vuotias lapsi voi myös kirjautua sisään ja seurata omia tehtäviään ja muistettavia asioita itsenäisesti, turvallisesti ja helposti.</span>
         </li>
         <li class="d-flex align-items-start mb-3">
-          <span class="me-3 p-2 bg-warning rounded-circle text-white"><i class="bi bi-chat-dots"></i></span>
           <span><strong>Palaute ja kehitys:</strong> Kerro ajatuksesi ja parannusehdotuksesi suoraan sovelluksen kautta. Haluamme kehittää LapsiPerheApurista palvelun, joka palvelee parhaiten juuri teidän perheenne tarpeita!</span>
         </li>
       </ul>
@@ -38,12 +35,11 @@
       <p class="lead mb-4">
         Liity mukaan helpottamaan arkeanne ja tutustu LapsiPerheApuriin jo tänään!
       </p>
-      <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3">
+      <div>
         <a class="btn btn-primary btn-lg px-4 me-md-2 fw-bold" href="{{ url_for('auth.login') }}" role="button">Aloita tästä</a>
         <button type="button" class="btn btn-outline-secondary btn-lg px-4">Lue lisää</button>
       </div>
     </div>
   </div>
-
 </div>
 {% endblock %}
