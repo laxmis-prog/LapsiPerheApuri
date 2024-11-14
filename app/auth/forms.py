@@ -18,12 +18,10 @@ class LoginForm(FlaskForm):
 class RegistrationForm(FlaskForm):
     email = StringField('Sähköposti', validators=[
         DataRequired(message='Täytä tämä kenttä'),
-        Length(1, 64, message='Sähköpostin on oltava 1-64 merkkiä pitkä'),
         Email(message='Anna kelvollinen sähköpostiosoite')
     ])
     username = StringField('Käyttäjänimi', validators=[
         DataRequired(message='Täytä tämä kenttä'),
-        Length(1, 64, message='Käyttäjänimen on oltava 1-64 merkkiä pitkä'),
         Regexp('^[A-Za-z][A-Za-z0-9_.]*$', 0,
                'Käyttäjänimessä saa olla vain kirjaimia, numeroita, pisteitä tai alaviivoja.')
     ])
