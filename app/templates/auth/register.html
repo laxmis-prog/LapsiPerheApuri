@@ -7,7 +7,8 @@
 {% block title %}Apuri - Rekisteröidy{% endblock %}
 
 {% block page_content %}
-<div class="d-flex align-items-center justify-content-center py-4 bg-body-tertiary" style="height: 100vh;">
+<!-- Wrapper to center the card with equal space at top, bottom, and sides -->
+<div class="container-fluid d-flex align-items-center justify-content-center min-vh-100 p-0"> <!-- Ensures full page height with padding removed -->
     <div class="w-100" style="max-width: 380px;">
         <!-- Form Section -->
         <div class="card shadow-sm">
@@ -47,13 +48,13 @@
                         {{ form.submit(class="btn btn-primary w-100") }}
                     </div>
                 </form>
-                
                 <p class="mt-3 text-center">Onko sinulla jo tili? <a href="{{ url_for('auth.login') }}">Kirjaudu sisään</a>.</p>
             </div>
         </div>
     </div>
 </div>
 {% endblock %}
+
 
 {% block scripts %}
 <script>

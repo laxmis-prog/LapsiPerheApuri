@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, TextAreaField, DateTimeField, BooleanField, SelectField,\
-    SubmitField, FileField, DateField
+    SubmitField, FileField, DateField, TimeField
 from wtforms.validators import DataRequired, Length, Email, Regexp
 from wtforms import ValidationError
 from ..models import Role, User
@@ -14,9 +14,10 @@ class TaskForm(FlaskForm):
     member_name = StringField('Jäsenen nimi', validators=[Length(max=64)])
     title = StringField('Otsikko', validators=[DataRequired(), Length(max=128)])
     description = TextAreaField('Kuvaus')
-    due_date = DateField('Due Date', format='%Y-%m-%d', validators=[DataRequired()])
-    category = StringField('Kategoria', validators=[Length(max=64)])
-    status = SelectField('Tila', choices=[('pending', 'Pending'), ('completed', 'Completed')])
+    due_date = DateField('Eräpäivä', format='%Y-%m-%d', validators=[DataRequired()])
+    time = TimeField('Aika', format='%H:%M', validators=[DataRequired()])
+    category = SelectField('Kategoria', choices=[('lääkäri', 'Lääkäri'), ('koulu', 'Koulu'), ('yksityinen', 'Yksityinen')], validators=[DataRequired()])
+    status = SelectField('Tila', choices=[('odottaa', 'odottaa'), ('suoritettu', 'suoritettu')])
     submit = SubmitField('Lähetä')
 
 class FeedbackForm(FlaskForm):

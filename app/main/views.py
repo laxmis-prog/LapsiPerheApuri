@@ -21,6 +21,7 @@ def tasks():
             title=form.title.data,
             description=form.description.data,
             due_date=form.due_date.data,
+            time=form.time.data,
             category=form.category.data,
             status=form.status.data,
             user_id=current_user.id  # Ensure this user ID is captured

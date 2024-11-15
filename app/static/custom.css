@@ -96,3 +96,8 @@ footer a:hover {
   padding: 20px;
 }
 
+/*dashboard*/
+.status-button {
+  margin-bottom: 10px; /* Adjust the value as needed */
+}
+

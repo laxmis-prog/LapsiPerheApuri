@@ -3,57 +3,94 @@
 
 {% block content %}
 <div class="container mt-4">
-    <h2>Tehtävät</h2>  <!-- Translated Tasks -->
-    <form method="POST" action="{{ url_for('main.tasks') }}">
-        {{ form.hidden_tag() }}
-        <div class="form-group">
-            {{ form.member_name.label(class="form-label") }}  <!-- Translated Member Name -->
-            {{ form.member_name(class="form-control") }}
+    <!-- Tehtävät Card (Initially Hidden) -->
+    <div id="tehtavat-card" class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-4 bg-light-gradient" style="display: none;">
+        <div class="col-lg-12 p-3 p-lg-5 pt-lg-3">
+            <h2 class="display-4 fw-bold lh-1 welcome-text mb-4">Tehtävät</h2>
+            <form method="POST" action="{{ url_for('main.tasks') }}">
+                {{ form.hidden_tag() }}
+                <div class="form-group">
+                    {{ form.member_name.label(class="form-label") }}  <!-- Translated Member Name -->
+                    {{ form.member_name(class="form-control") }}
+                </div>
+                <div class="form-group">
+                    {{ form.title.label(class="form-label") }}  <!-- Translated Title -->
+                    {{ form.title(class="form-control") }}
+                </div>
+                <div class="form-group">
+                    {{ form.description.label(class="form-label") }} 
+                    {{ form.description(class="form-control") }}
+                </div>
+                <div class="form-group">
+                    {{ form.due_date.label(class="form-label") }}  <!-- Translated Due Date -->
+                    {{ form.due_date(class="form-control", type="date") }}
+                </div>
+                <div class="form-group">
+                    {{ form.time.label(class="form-label") }}  <!-- Translated Time -->
+                    {{ form.time(class="form-control", type="time") }}
+                </div>
+                <div class="form-group">
+                    {{ form.category.label(class="form-label") }}  <!-- Translated Category -->
+                    {{ form.category(class="form-control") }}
+                </div>
+                <div class="form-group">
+                    {{ form.status.label(class="form-label") }}  <!-- Translated Status -->
+                    {{ form.status(class="form-control") }}
+                </div>
+                <div class="form-group">
+                    {{ form.submit(class="btn btn-primary") }}  <!-- Translated Submit -->
+                </div>
+            </form>
         </div>
-        <div class="form-group">
-            {{ form.title.label(class="form-label") }}  <!-- Translated Title -->
-            {{ form.title(class="form-control") }}
-        </div>
-        <div class="form-group">
-            {{ form.description.label(class="form-label") }}  <!-- Translated Description -->
-            {{ form.description(class="form-control") }}
-        </div>
-        <div class="form-group">
-            {{ form.due_date.label(class="form-label") }}  <!-- Translated Due Date -->
-            {{ form.due_date(class="form-control", type="date") }}
-        </div>
-        <div class="form-group">
-            {{ form.category.label(class="form-label") }}  <!-- Translated Category -->
-            {{ form.category(class="form-control") }}
-        </div>
-        <div class="form-group">
-            {{ form.status.label(class="form-label") }}  <!-- Translated Status -->
-            {{ form.status(class="form-control") }}
-        </div>
-        <div class="form-group">
-            {{ form.submit(class="btn btn-primary") }}  <!-- Translated Submit -->
-        </div>
-    </form>
+    </div>
     <hr>
-    <h3>Tehtävälista</h3>  <!-- Translated Task List -->
-    <ul class="list-group">
-        {% for task in tasks %}
-        <li class="list-group-item">
-            <h5>{{ task.title }}</h5>
-            <p>Jäsenen nimi: {{ task.member_name }}</p>  <!-- Translated Member Name -->
-            <p>{{ task.description }}</p>
-            <p>Eräpäivä: {{ task.due_date }}</p>  <!-- Translated Due Date -->
-            <p>Tila: {{ task.status }}</p>  <!-- Translated Status -->
-            <form method="POST" action="{{ url_for('main.update_task_status', task_id=task.task_id) }}">
-                <input type="hidden" name="status" value="{{ 'completed' if task.status == 'pending' else 'pending' }}">
-                <button type="submit" class="btn btn-secondary">{{ 'Merkitse suoritetuksi' if task.status == 'pending' else 'Merkitse odottavaksi' }}</button>  <!-- Translated Button -->
-            </form>
-            <a href="{{ url_for('main.edit_task', task_id=task.task_id) }}" class="btn btn-warning">Muokkaa</a>  <!-- Translated Edit -->
-            <form method="POST" action="{{ url_for('main.delete_task', task_id=task.task_id) }}" style="display:inline;">
-                <button type="submit" class="btn btn-danger">Poista</button>  <!-- Translated Delete -->
-            </form>
-        </li>
-        {% endfor %}
-    </ul>
+    <!-- Tehtävälista Card -->
+    <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-4 bg-light-gradient">
+        <div class="col-lg-12 p-3 p-lg-5 pt-lg-3">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h3 class="display-4 fw-bold lh-1 welcome-text">Tehtävälista</h3>
+                <a href="#" id="show-tehtavat-card" class="btn btn-primary d-flex align-items-center">
+                    <i class="fas fa-plus me-2"></i>
+                    lisää uusi tehtävä
+                </a>
+            </div>  
+            <ul class="list-group">
+                {% for task in tasks %}
+                <li class="list-group-item">
+                    <h5><strong><u>{{ task.title }}</u></strong></h5>  <!-- Bold and Underlined Title -->
+                    <p><strong>Jäsenen nimi:</strong> {{ task.member_name }}</p>  <!-- Bold Member Name -->
+                    <p><strong>Kuvaus:</strong> {{ task.description }}</p>  <!-- Bold Description -->
+                    <p><strong>Eräpäivä:</strong> {{ task.due_date }}</p>  <!-- Bold Due Date -->
+                    <p><strong>Aika:</strong> {{ task.time }}</p>  <!-- Bold Time -->
+                    <p><strong>Kategoria:</strong> {{ task.category }}</p>  <!-- Bold Category -->
+                    <p><strong>Tila:</strong> {{ task.status }}</p>  <!-- Bold Status -->
+                    <form method="POST" action="{{ url_for('main.update_task_status', task_id=task.task_id) }}">
+                        <input type="hidden" name="status" value="{{ 'completed' if task.status == 'pending' else 'pending' }}">
+                        <button type="submit" class="btn btn-secondary status-button">{{ 'Merkitse suoritetuksi' if task.status == 'pending' else 'Merkitse odottavaksi' }}</button>  <!-- Translated Button -->
+                    </form>
+                    <a href="{{ url_for('main.edit_task', task_id=task.task_id) }}" class="btn btn-primary">Muokkaa</a>  <!-- Translated Edit -->
+                    <form method="POST" action="{{ url_for('main.delete_task', task_id=task.task_id) }}" style="display:inline;">
+                        <button type="submit" class="btn btn-danger">Poista</button>  <!-- Translated Delete -->
+                    </form>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const showTehtavatCardButton = document.getElementById("show-tehtavat-card");
+        const tehtavatCard = document.getElementById("tehtavat-card");
+
+        showTehtavatCardButton.addEventListener("click", function(event) {
+            event.preventDefault();
+            tehtavatCard.style.display = "block";
+            showTehtavatCardButton.style.display = "none";
+        });
+    });
+</script>
 {% endblock %}
