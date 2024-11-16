@@ -28,11 +28,11 @@ class FeedbackForm(FlaskForm):
 
 
 class EditProfileForm(FlaskForm):
-    name = StringField('Real name', validators=[Length(0, 64)])
-    location = StringField('Location', validators=[Length(0, 64)])
-    about_me = TextAreaField('About me')
-    profile_picture = FileField('Profile Picture', validators=[FileAllowed(['jpg', 'png'], 'Images only!')])
-    submit = SubmitField('Submit')
+    name = StringField('Koko nimi', validators=[Length(0, 64)])
+    location = StringField('Sijainti', validators=[Length(0, 64)])
+    about_me = TextAreaField('Tietoa minusta')
+    profile_picture = FileField('Profiili kuva', validators=[FileAllowed(['jpg', 'png'], 'Vain kuvat')])
+    submit = SubmitField('Lähetä')
     
 class EditProfileAdminForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Length(1, 64),

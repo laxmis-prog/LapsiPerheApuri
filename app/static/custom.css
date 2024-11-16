@@ -101,3 +101,21 @@ footer a:hover {
   margin-bottom: 10px; /* Adjust the value as needed */
 }
 
+/*Profile*/
+
+/* Hide default 'No file chosen' text */
+input[type="file"]::file-selector-button {
+  display: none;
+}
+
+/* Optional: Style the custom file input button */
+.form-control-file {
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+  background-color: #f8f9fa;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  text-align: center;
+}
+

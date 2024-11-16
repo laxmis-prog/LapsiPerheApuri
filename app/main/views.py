@@ -7,6 +7,7 @@ from .forms import TaskForm, FeedbackForm
 from .. import db
 from ..models import User
 from ..models import Task
+from ..models import Feedback
 from .forms import EditProfileForm
 
 @main.route('/tasks', methods=['GET', 'POST'])
@@ -84,13 +85,24 @@ def update_task_status(task_id):
 
 
 @main.route('/feedback', methods=['GET', 'POST'])
-@login_required
+@login_required  # Varmistaa, että käyttäjä on kirjautunut sisään
 def feedback():
     form = FeedbackForm()
     if form.validate_on_submit():
-        # Handle feedback form submission
-        flash('Feedback submitted successfully.')
-        return redirect(url_for('main.feedback'))
+        # Luo ja tallenna palaute
+        feedback = Feedback(
+            user_id=current_user.id,  # Liittää palautteen kirjautuneeseen käyttäjään
+            message=form.message.data  # Tallentaa palautelomakkeen viestin
+        )
+        try:
+            db.session.add(feedback)  # Lisää palaute tietokantaan
+            db.session.commit()  # Tallentaa muutokset tietokantaan
+            flash('Kiitos palautteestasi!', 'success')  # Ilmoittaa onnistumisesta
+            return redirect(url_for('main.index'))  # Ohjaa käyttäjä toiselle sivulle
+        except Exception as e:
+            db.session.rollback()  # Peruuta muutokset virheen sattuessa
+            flash(f'Virhe palautetta tallentaessa: {e}', 'danger')  # Näytä virheilmoitus
+            print(f"Palauteen tallennusvirhe: {e}")  # Tulosta virhe debuggausta varten
     return render_template('feedback.html', form=form)
 
 @main.route('/')
