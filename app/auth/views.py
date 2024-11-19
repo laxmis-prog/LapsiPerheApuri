@@ -134,31 +134,32 @@ def password_reset(token):
             return redirect(url_for('main.index'))
     return render_template('auth/reset_password.html', form=form)
 
-@auth.route('/change_email', methods=['GET', 'POST'])
+
+@auth.route('/change_email_request', methods=['GET', 'POST'])
 @login_required
 def change_email_request():
     form = ChangeEmailForm()
     if form.validate_on_submit():
-        if current_user.verify_password(form.password.data):
-            new_email = form.email.data.lower()
-            token = current_user.generate_email_change_token(new_email)
-            send_email(new_email, 'Vahvista sähköpostiosoitteesi',
-                       'auth/email/change_email',
-                       user=current_user, token=token)
-            flash('Ohjeet uuden sähköpostiosoitteen vahvistamiseen on lähetetty sinulle.')
-            return redirect(url_for('main.index'))
-        else:
-            flash('Virheellinen sähköposti tai salasana.')
-    return render_template("auth/change_email.html", form=form)
+        new_email = form.email.data.lower()
+        token = current_user.generate_email_change_token(new_email)
+        send_email(new_email, 'Vaihda sähköpostiosoite',
+                   'auth/email/change_email', user=current_user, token=token)
+        flash('Sähköpostiosoitteen vaihtolinkki on lähetetty sähköpostiisi.')
+        return redirect(url_for('main.index'))
+    return render_template('auth/change_email_request.html', form=form)
 
-
-@auth.route('/change_email/<token>')
+@auth.route('/change_email/<token>', methods=['GET', 'POST'])
 @login_required
 def change_email(token):
-    if current_user.change_email(token):
+    if not current_user.confirm(token):
+        flash('Virheellinen tai vanhentunut vahvistuslinkki.')
+        return redirect(url_for('main.index'))
+    form = ChangeEmailForm()
+    if form.validate_on_submit():
+        current_user.email = form.email.data
+        db.session.add(current_user)
         db.session.commit()
         flash('Sähköpostiosoitteesi on päivitetty.')
-    else:
-        flash('Virheellinen pyyntö.')
-    return redirect(url_for('main.index'))
+        return redirect(url_for('main.index'))
+    return render_template('auth/change_email.html', form=form)
 

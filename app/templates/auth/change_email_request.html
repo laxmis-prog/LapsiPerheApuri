@@ -1,0 +1,102 @@
+
+{% extends "base.html" %}
+{% set hide_navbar = true %}
+{% set hide_footer = true %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}Apuri - Vaihda sähköpostiosoite{% endblock %}
+
+{% block page_content %}
+<div class="d-flex align-items-center justify-content-center py-4 bg-body-tertiary" style="height: 100vh;">
+    <div class="w-100" style="max-width: 380px;">
+        <!-- Form Section -->
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h1 class="h3 mb-4 text-center fw-bold">Vaihda sähköpostiosoite</h1>
+                
+                <form method="POST" action="{{ url_for('auth.change_email_request') }}">
+                    {{ form.hidden_tag() }}
+
+                    <!-- New Email Field -->
+                    <div class="form-group mb-3">
+                        {{ wtf.form_field(form.email, class="form-control custom-input", placeholder="Uusi sähköposti") }}
+                        {% if form.email.errors %}
+                            <ul class="errors">
+                                {% for error in form.email.errors %}
+                                    <li class="text-danger">{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </div>
+
+                    <!-- Password Field -->
+                    <div class="form-group mb-3">
+                        {{ wtf.form_field(form.password, class="form-control custom-input", placeholder="Salasana") }}
+                        {% if form.password.errors %}
+                            <ul class="errors">
+                                {% for error in form.password.errors %}
+                                    <li class="text-danger">{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="text-center mb-3">
+                        <button type="submit" class="btn btn-primary w-100 py-2">
+                            Päivitä sähköpostiosoite
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const form = document.querySelector("form");
+
+        // Disable native HTML validation
+        form.setAttribute("novalidate", "novalidate");
+
+        form.addEventListener("submit", function(event) {
+            let isValid = true;
+
+            form.querySelectorAll("input").forEach(function(input) {
+                input.setCustomValidity("");  // Clear any existing custom messages
+
+                // Check for empty fields
+                if (input.validity.valueMissing) {
+                    input.setCustomValidity("Täytä tämä kenttä");
+                    isValid = false;
+                }
+                // Check for email format mismatch
+                else if (input.validity.typeMismatch && input.type === "email") {
+                    input.setCustomValidity("Anna kelvollinen sähköpostiosoite");
+                    isValid = false;
+                }
+
+                // Display the custom message if invalid
+                if (!input.checkValidity()) {
+                    input.reportValidity();
+                }
+            });
+
+            // Prevent form submission if invalid
+            if (!isValid) {
+                event.preventDefault();
+            }
+        });
+
+        // Clear custom validity messages on input change
+        form.querySelectorAll("input").forEach(function(input) {
+            input.addEventListener("input", function() {
+                input.setCustomValidity("");
+            });
+        });
+    });
+</script>
+{% endblock %}

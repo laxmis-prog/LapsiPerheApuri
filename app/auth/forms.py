@@ -67,10 +67,11 @@ class PasswordResetForm(FlaskForm):
         DataRequired(message='Täytä tämä kenttä'),
         EqualTo('password2', message='Salasanojen on oltava samat.')
     ])
-    password2 = PasswordField('Vahvista salasana', validators=[
+    password2 = PasswordField('Vahvista uusi salasana', validators=[
         DataRequired(message='Täytä tämä kenttä')
     ])
     submit = SubmitField('Nollaa salasana')
+
 
 class ChangeEmailForm(FlaskForm):
     email = StringField('Uusi sähköposti', validators=[
