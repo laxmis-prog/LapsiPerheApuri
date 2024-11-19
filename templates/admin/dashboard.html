@@ -1,0 +1,32 @@
+
+{% extends "base.html" %}
+
+{% block title %}Ylläpitäjän Hallintapaneeli{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4">Ylläpitäjän Hallintapaneeli</h2>
+    <h3>Tehtävät</h3>
+    <ul class="list-group mb-4">
+        {% for task in tasks %}
+        <li class="list-group-item">
+            <h5>{{ task.title }}</h5>
+            <p>{{ task.description }}</p>
+            <p>Eräpäivä: {{ task.due_date }}</p>
+            <p>Tila: {{ task.status }}</p>
+        </li>
+        {% endfor %}
+    </ul>
+    <h3>Palaute</h3>
+    <ul class="list-group">
+        {% for feedback in feedbacks %}
+        <li class="list-group-item">
+            <h5>{{ feedback.name }}</h5>
+            <p>{{ feedback.message }}</p>
+            <p>Sähköposti: {{ feedback.email }}</p>
+            <p>Aikaleima: {{ feedback.timestamp }}</p>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

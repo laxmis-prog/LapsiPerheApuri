@@ -76,8 +76,12 @@ footer a:hover {
   width: 250px;
   background-color: #B2F1E6; /* Light Blue */
   padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Ensures space is distributed, and logout goes to the bottom */
 }
 
+/* Styling for links inside the sidebar */
 .sidebar a {
   padding: 10px 15px;
   text-decoration: none;
@@ -86,16 +90,28 @@ footer a:hover {
   display: block;
 }
 
+/* Hover effects for links */
 .sidebar a:hover {
   background-color: #FFF3B0; /* Light Yellow for hover */
   color: #000000; /* Black for hover */
+}
+
+/* Style the logout button */
+.sidebar a.logout {
+  background-color: red; /* Red background for logout button */
+  color: white; /* White text */
+  margin-top: auto; /* Pushes the logout button to the bottom */
+}
+
+.sidebar a.logout:hover {
+  background-color: darkred; /* Dark red when hovered */
 }
 
 .content {
   margin-left: 250px;
   padding: 20px;
 }
-
+ 
 /*dashboard*/
 .status-button {
   margin-bottom: 10px; /* Adjust the value as needed */

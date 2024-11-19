@@ -64,6 +64,8 @@ class User(UserMixin, db.Model):
     member_since = db.Column(db.DateTime(), default=datetime.utcnow)
     last_seen = db.Column(db.DateTime(), default=datetime.utcnow)
     profile_picture = db.Column(db.String(128), nullable=True)
+    is_admin = db.Column(db.Boolean, default=False)  # Add the is_admin field
+
 
     def generate_reset_token(self, expiration=3600):
         s = Serializer(current_app.config['SECRET_KEY'], expiration)

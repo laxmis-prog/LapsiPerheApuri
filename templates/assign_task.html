@@ -1,0 +1,24 @@
+
+{% extends "base.html" %}
+
+{% block title %}Anna Tehtävä{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4">Anna Tehtävä</h2>
+    <form method="POST" action="{{ url_for('admin.assign_task') }}">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            {{ form.user_id.label(class="form-label") }}
+            {{ form.user_id(class="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ form.task_id.label(class="form-label") }}
+            {{ form.task_id(class="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ form.submit(class="btn btn-primary") }}
+        </div>
+    </form>
+</div>
+{% endblock %}
