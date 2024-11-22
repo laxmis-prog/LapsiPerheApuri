@@ -64,7 +64,12 @@ class User(UserMixin, db.Model):
     member_since = db.Column(db.DateTime(), default=datetime.utcnow)
     last_seen = db.Column(db.DateTime(), default=datetime.utcnow)
     profile_picture = db.Column(db.String(128), nullable=True)
-    is_admin = db.Column(db.Boolean, default=False)  # Add the is_admin field
+    
+    
+    def is_administrator(self):
+        # Check if the user has the ADMIN permission
+        return self.role.permissions & Permission.ADMINISTER > 0
+   
 
 
     def generate_reset_token(self, expiration=3600):

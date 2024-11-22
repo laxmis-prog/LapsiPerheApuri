@@ -8,7 +8,7 @@ from .forms import AssignTaskForm, EditCategoryForm
 @admin.route('/admin')
 @login_required
 def admin_dashboard():
-    if not current_user.is_admin:
+    if not current_user.is_administrator():
         flash('Sinulla ei ole oikeuksia nähdä tätä sivua.')
         return redirect(url_for('main.index'))
     tasks = Task.query.all()
@@ -18,9 +18,9 @@ def admin_dashboard():
 @admin.route('/assign_task', methods=['GET', 'POST'])
 @login_required
 def assign_task():
-    if not current_user.is_admin:
+    if not current_user.is_administrator():
         flash('Sinulla ei ole oikeuksia nähdä tätä sivua.')
-        return redirect(url_for('main.index'))
+        return redirect(url_for('admin.admin_dashboard'))  # Corrected the redirect URL
     form = AssignTaskForm()
     form.user_id.choices = [(user.id, user.username) for user in User.query.all()]
     form.task_id.choices = [(task.id, task.title) for task in Task.query.all()]
@@ -35,7 +35,7 @@ def assign_task():
 @admin.route('/edit_category/<int:task_id>', methods=['GET', 'POST'])
 @login_required
 def edit_category(task_id):
-    if not current_user.is_admin:
+    if not current_user.is_administrator():
         flash('Sinulla ei ole oikeuksia nähdä tätä sivua.')
         return redirect(url_for('main.index'))
     task = Task.query.get_or_404(task_id)

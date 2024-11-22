@@ -30,6 +30,8 @@ def login():
         user = User.query.filter_by(email=form.email.data).first()
         if user is not None and user.verify_password(form.password.data):
             login_user(user, remember=form.remember_me.data)
+            if user.is_administrator():
+                return redirect(url_for('admin.admin_dashboard'))
             return redirect(url_for('main.tasks'))  # Redirect to tasks page after login
         flash('Virheellinen käyttäjänimi tai salasana.')
     return render_template('auth/login.html', form=form)
