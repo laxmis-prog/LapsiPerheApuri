@@ -2,30 +2,71 @@
 
 {% block title %}Ylläpitäjän Hallintapaneeli{% endblock %}
 
-{% block content %}
-<div class="container mt-4">
-    <h2 class="mb-4">Ylläpitäjän Hallintapaneeli</h2>
-    <h3>Tehtävät</h3>
-    <ul class="list-group mb-4">
-        {% for task in tasks %}
-        <li class="list-group-item">
-            <h5>{{ task.title }}</h5>
-            <p>{{ task.description }}</p>
-            <p>Eräpäivä: {{ task.due_date }}</p>
-            <p>Tila: {{ task.status }}</p>
-        </li>
-        {% endfor %}
-    </ul>
-    <h3>Palaute</h3>
-    <ul class="list-group">
-        {% for feedback in feedbacks %}
-        <li class="list-group-item">
-            <h5>{{ feedback.name }}</h5>
-            <p>{{ feedback.message }}</p>
-            <p>Sähköposti: {{ feedback.email }}</p>
-            <p>Aikaleima: {{ feedback.timestamp }}</p>
-        </li>
-        {% endfor %}
-    </ul>
+{% block page_content %}
+<div class="d-flex">
+    <!-- Sidebar -->
+    <div class="sidenav-container">
+        {% include 'admin/sidenav.html' %}
+    </div>
+
+    <!-- Main Content -->
+    <div class="content-container flex-grow-1">
+        <!-- Welcome Section -->
+        <div class="welcome-card row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center bg-light-gradient mb-4">
+            <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
+                <h1 class="display-4 fw-bold lh-1 text-primary mb-4">Ylläpitäjän Hallintapaneeli</h1>
+                <p class="lead mb-4">
+                    Tervetuloa ylläpitäjän hallintapaneeliin! Täältä voit hallinnoida käyttäjiä, tehtäviä, ja palautteita helposti ja tehokkaasti.
+                </p>
+                <p class="lead fw-bold mb-3">Hallintapaneelin ominaisuudet:</p>
+                <ul class="list-unstyled mb-4">
+                    <li class="d-flex align-items-start mb-3">
+                        <span><strong>Tehtävien hallinta:</strong> Tarkastele ja hallinnoi kaikkia tehtäviä yhdestä paikasta.</span>
+                    </li>
+                    <li class="d-flex align-items-start mb-3">
+                        <span><strong>Käyttäjäprofiilit:</strong> Näe ja hallitse kaikkia käyttäjien profiileja ja tietoja.</span>
+                    </li>
+                    <li class="d-flex align-items-start mb-3">
+                        <span><strong>Palautteet:</strong> Tarkastele ja vastaa käyttäjien palautteisiin suoraan paneelin kautta.</span>
+                    </li>
+                </ul>
+                <p class="lead mb-4">
+                    Kaikki hallintatyökalut ovat saatavilla yhdessä paikassa – varmista, että yhteisösi toimii sujuvasti!
+                </p>
+            </div>
+        </div>
+
+        <!-- Dashboard Content -->
+        <div class="welcome-card row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center bg-light-gradient">
+            <div class="col-lg-12 p-3 p-lg-5 pt-lg-3">
+                <h2 class="display-5 fw-bold lh-1 text-primary mb-4">Hallintapaneelin Sisältö</h2>
+                <div class="card-body">
+                    <!-- Task Management -->
+                    <h3>Tehtävät</h3>
+                    <ul class="list-group mb-4">
+                        {% for task in tasks %}
+                        <li class="list-group-item">
+                            <h5>{{ task.title }}</h5>
+                            <p>{{ task.description }}</p>
+                            <p>Eräpäivä: {{ task.due_date }}</p>
+                            <p>Tila: {{ task.status }}</p>
+                        </li>
+                        {% endfor %}
+                    </ul>
+
+                    <!-- Feedback Section -->
+                    <h3>Palaute</h3>
+                    <ul class="list-group">
+                        {% for feedback in feedbacks %}
+                        <li class="list-group-item">
+                            <h5>{{ feedback.name }}</h5>
+                            <p>{{ feedback.message }}</p>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}

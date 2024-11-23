@@ -111,6 +111,82 @@ footer a:hover {
   margin-left: 250px;
   padding: 20px;
 }
+
+/* Custom sidenavbar styles */
+.sidebar-custom {
+  background-color: #343a40;
+  color: white;
+  padding: 15px;
+  height: 100vh;
+}
+
+.sidebar-custom a {
+  color: white;
+  text-decoration: none;
+  display: block;
+  padding: 10px 0;
+}
+
+.sidebar-custom a:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-custom .btn-danger {
+  background-color: #dc3545;
+  border-color: #dc3545;
+  color: white;
+}
+
+.sidebar-custom .btn-danger:hover {
+  background-color: #c82333;
+  border-color: #bd2130;
+  color: white;
+}
+
+
+/* Sidenavbar container */
+.sidenav-container {
+  width: 250px;
+  background-color: #f8f9fa;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  padding: 15px;
+  overflow-y: auto;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Main content container */
+.content-container {
+  margin-left: 250px; /* Matches sidebar width */
+  padding: 20px;
+  width: calc(100% - 250px); /* Adjust content width */
+}
+
+/* Sidebar links */
+.sidebar a {
+  text-decoration: none;
+  color: #333;
+  padding: 10px;
+  margin: 5px 0;
+  display: block;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.sidebar a:hover {
+  background-color: #e9ecef;
+}
+
+.sidebar a i {
+  margin-right: 10px;
+}
+
+.sidebar .btn {
+  margin-top: auto;
+}
+
  
 /*dashboard*/
 .status-button {
@@ -135,3 +211,42 @@ input[type="file"]::file-selector-button {
   text-align: center;
 }
 
+/* logo */
+
+/* Ensure the navbar text and logo are aligned */
+.navbar-brand {
+  display: flex;
+  align-items: center;  /* Vertically aligns logo and text */
+  height: 56px;  /* Set the navbar height to a fixed value */
+}
+
+/* Resize the logo and adjust vertical position */
+.navbar-logo {
+  width: 290px;  /* Adjust the logo width */
+  height: auto; /* Maintain aspect ratio */
+  margin-right: 3px; /* Very small space between the logo and text */
+  margin-top: 12px; /* Lower the logo to reveal the ears */
+}
+
+/* Optional: Adjust navbar padding */
+.navbar {
+  padding-left: 20px;
+  padding-right: 20px;
+  height: 56px;  /* Set a fixed height for the navbar */
+}
+
+/* Optional: Adjust navbar logo size on mobile devices */
+@media (max-width: 768px) {
+  .navbar-logo {
+      width: 45px;  /* Smaller logo size on mobile */
+      margin-top: 2px; /* Adjust for mobile to ensure logo is centered */
+  }
+}
+
+/* Custom logo styles */
+.logo-custom {
+  max-width: 200px; /* Adjust the size as needed */
+  height: auto;
+  display: block;
+  margin: 0 auto; /* Center the logo horizontally */
+}

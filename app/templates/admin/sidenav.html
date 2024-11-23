@@ -1,0 +1,27 @@
+<div class="sidebar-custom d-flex flex-column justify-content-between" style="height: 100vh;">
+    <div>
+        <a href="{{ url_for('main.user', username=current_user.username) }}">
+            <i class="fas fa-user"></i> Profiili
+        </a>
+        <a href="{{ url_for('admin.admin_dashboard') }}">
+            <i class="fas fa-tachometer-alt"></i> Hallintapaneeli
+        </a>
+        <a href="{{ url_for('admin.assign_task') }}">
+            <i class="fas fa-tasks"></i> Anna Tehtävä
+        </a>
+        <a href="{{ url_for('admin.edit_category', task_id=1) }}"> <!-- Replace task_id=1 with a valid task ID -->
+            <i class="fas fa-edit"></i> Muokkaa Kategoriaa
+        </a>
+        <a href="{{ url_for('auth.change_password') }}">
+            <i class="fas fa-key"></i> Vaihda Salasana
+        </a>
+        <a href="{{ url_for('auth.change_email_request') }}">
+            <i class="fas fa-envelope"></i> Vaihda Sähköposti
+        </a>
+    </div>
+    <div>
+        <a href="{{ url_for('auth.logout') }}" class="btn btn-danger w-100 mt-3">
+            <i class="fas fa-sign-out-alt"></i> Kirjaudu Ulos
+        </a>
+    </div>
+</div>

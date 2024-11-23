@@ -23,7 +23,7 @@ def assign_task():
         return redirect(url_for('admin.admin_dashboard'))  # Corrected the redirect URL
     form = AssignTaskForm()
     form.user_id.choices = [(user.id, user.username) for user in User.query.all()]
-    form.task_id.choices = [(task.id, task.title) for task in Task.query.all()]
+    form.task_id.choices = [(task.task_id, task.title) for task in Task.query.all()]
     if form.validate_on_submit():
         task = Task.query.get(form.task_id.data)
         task.user_id = form.user_id.data

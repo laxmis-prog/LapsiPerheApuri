@@ -13,9 +13,11 @@
         <!-- Form Section -->
         <div class="card shadow-sm">
             <div class="card-body">
-                <h1 class="h3 mb-4 text-center fw-bold">Rekisteröidy</h1>
-                <form method="POST" action="{{ url_for('auth.register') }}" novalidate>
-                    {{ form.hidden_tag() }}
+               <!-- Logo Image -->
+               <img src="{{ url_for('static', filename='images/APURI.png') }}" alt="Logo" class="img-fluid logo-custom mb-4">
+               <h1 class="h3 mb-4 text-center fw-bold">Rekisteröidy</h1>
+               <form method="POST" action="{{ url_for('auth.register') }}" novalidate>
+                   {{ form.hidden_tag() }}
                     <div class="form-group">
                         {{ form.email.label(class="form-label") }}
                         {{ form.email(class="form-control", required=True) }}

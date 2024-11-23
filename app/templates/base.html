@@ -32,14 +32,18 @@
 </head>
 <body>
     {% if current_user.is_authenticated and hide_navbar is not true %}
-        {% include 'sidebar.html' %}
+        {% if not current_user.is_administrator() %}
+            {% include 'sidebar.html' %}
+        {% endif %}
     {% else %}
         {% if hide_navbar is not true %}
         {% block navbar %}
         <nav class="navbar navbar-expand-lg navbar-light fixed-top  ">
             <div class="container">
                 <a class="navbar-brand" href="{{ url_for('main.index') }}">
-                    <i class="fas fa-home"></i> Lapsi-Perhe-Apuri
+                    <img src="{{ url_for('static', filename='images/APURI.png') }}" alt="Logo" class="navbar-logo"> <!-- Add class "navbar-logo" -->
+                    Lapsi-Perhe-Apuri
+                </a>
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
