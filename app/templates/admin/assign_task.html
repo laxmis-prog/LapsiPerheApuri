@@ -1,29 +1,81 @@
-
 {% extends "base.html" %}
 
 {% block title %}Anna Tehtävä{% endblock %}
 
-{% block content %}
-<div class="container-fluid mt-4">
-    <div class="row">
-        <div class="col-md-3">
-            {% include 'admin/sidenav.html' %}
+{% block page_content %}
+<div class="d-flex">
+    <!-- Sidebar -->
+    <div class="sidenav-container">
+        {% include 'admin/sidenav.html' %}
+    </div>
+
+    <!-- Main Content -->
+    <div class="content-container flex-grow-1">
+        <!-- Assign Task Section -->
+        <div class="welcome-card row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center bg-light-gradient mb-4">
+            <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
+                <h1 class="display-4 fw-bold lh-1 text-primary mb-4">Anna Tehtävä</h1>
+                <form method="POST" action="{{ url_for('admin.assign_task') }}">
+                    {{ form.hidden_tag() }}
+
+                    <!-- Jäsenen Nimi (User Selection) -->
+                    <div class="form-group mb-3">
+                        {{ form.user_id.label(class="form-label") }}
+                        {{ form.user_id(class="form-control") }}
+                    </div>
+
+                    <!-- Tehtävän Otsikko (Title) -->
+                    <div class="form-group mb-3">
+                        <label for="task_title" class="form-label">Otsikko</label>
+                        <input type="text" id="task_title" name="task_title" class="form-control" 
+                               placeholder="Kirjoita tehtävän otsikko..." required>
+                    </div>
+
+                    <!-- Kuvaus (Description) -->
+                    <div class="form-group mb-3">
+                        <label for="task_description" class="form-label">Kuvaus</label>
+                        <textarea id="task_description" name="task_description" class="form-control" rows="4" 
+                                  placeholder="Kirjoita tehtävän kuvaus..." required></textarea>
+                    </div>
+
+                    <!-- Eräpäivä (Due Date) -->
+                    <div class="form-group mb-3">
+                        <label for="task_due_date" class="form-label">Eräpäivä</label>
+                        <input type="date" id="task_due_date" name="task_due_date" class="form-control" required>
+                    </div>
+
+                    <!-- Aika (Time) -->
+                    <div class="form-group mb-3">
+                        <label for="task_time" class="form-label">Aika</label>
+                        <input type="time" id="task_time" name="task_time" class="form-control" required>
+                    </div>
+
+                    <!-- Kategoria (Category) -->
+                    <div class="form-group mb-3">
+                        <label for="task_category" class="form-label">Kategoria</label>
+                        <select id="task_category" name="task_category" class="form-control" required>
+                            <option value="Lääkäri">Lääkäri</option>
+                            <option value="Koulu">Koulu</option>
+                            <option value="Yksityinen">Yksityinen</option>
+                        </select>
+                    </div>
+
+                    <!-- Tila (Status) -->
+                    <div class="form-group mb-3">
+                        <label for="task_status" class="form-label">Tila</label>
+                        <select id="task_status" name="task_status" class="form-control" required>
+                            <option value="Odottaa">Odottaa</option>
+                            <option value="Suoritettu">Suoritettu</option>
+                        </select>
+                    </div>
+
+                    <!-- Lähetä (Submit Button) -->
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Anna Tehtävä</button>
+                    </div>
+                </form>
+            </div>
         </div>
-        <div class="col-md-9">
-    <h2 class="mb-4">Anna Tehtävä</h2>
-    <form method="POST" action="{{ url_for('admin.assign_task') }}">
-        {{ form.hidden_tag() }}
-        <div class="form-group">
-            {{ form.user_id.label(class="form-label") }}
-            {{ form.user_id(class="form-control") }}
-        </div>
-        <div class="form-group">
-            {{ form.task_id.label(class="form-label") }}
-            {{ form.task_id(class="form-control") }}
-        </div>
-        <div class="form-group">
-            {{ form.submit(class="btn btn-primary") }}
-        </div>
-    </form>
+    </div>
 </div>
 {% endblock %}

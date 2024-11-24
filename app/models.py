@@ -45,6 +45,10 @@ class Task(db.Model):
     status = db.Column(db.String(64), default='pending')
     user_id = db.Column(db.Integer, db.ForeignKey('users.id')) 
     member_name = db.Column(db.String(64), nullable=True)
+
+    # Fields for admin assignments
+    assigned_by = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True)  # Admin ID or NULL
+    assigned_to = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True)  # Recipient ID
     
 
     def __repr__(self):

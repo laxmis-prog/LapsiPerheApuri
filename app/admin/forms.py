@@ -1,4 +1,3 @@
-
 from flask_wtf import FlaskForm
 from wtforms import SelectField, SubmitField, StringField
 from wtforms.validators import DataRequired, Length
@@ -6,8 +5,13 @@ from wtforms.validators import DataRequired, Length
 class AssignTaskForm(FlaskForm):
     user_id = SelectField('Käyttäjä', coerce=int, validators=[DataRequired()])
     task_id = SelectField('Tehtävä', coerce=int, validators=[DataRequired()])
+    
+    # Adding additional fields for task details
+    task_title = StringField('Otsikko', validators=[DataRequired(), Length(max=128)])
+    task_description = StringField('Kuvaus', validators=[DataRequired()])
+    task_due_date = StringField('Eräpäivä', validators=[DataRequired()])
+    task_time = StringField('Aika', validators=[DataRequired()])
+    task_category = SelectField('Kategoria', choices=[('Lääkäri', 'Lääkäri'), ('Koulu', 'Koulu'), ('Yksityinen', 'Yksityinen')], validators=[DataRequired()])
+    task_status = SelectField('Tila', choices=[('Odottaa', 'Odottaa'), ('Suoritettu', 'Suoritettu')], validators=[DataRequired()])
+    
     submit = SubmitField('Anna tehtävä')
-
-class EditCategoryForm(FlaskForm):
-    category = StringField('Kategoria', validators=[DataRequired(), Length(max=64)])
-    submit = SubmitField('Muokkaa kategoriaa')

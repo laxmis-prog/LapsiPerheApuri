@@ -1,4 +1,4 @@
-<div class="sidebar-custom d-flex flex-column justify-content-between" style="height: 100vh;">
+<div class="sidebar-custom d-flex flex-column justify-content-between" style="height: 100vh; width: 250px; overflow: hidden; box-sizing: border-box;">
     <div>
         <a href="{{ url_for('main.user', username=current_user.username) }}">
             <i class="fas fa-user"></i> Profiili
@@ -8,9 +8,6 @@
         </a>
         <a href="{{ url_for('admin.assign_task') }}">
             <i class="fas fa-tasks"></i> Anna Tehtävä
-        </a>
-        <a href="{{ url_for('admin.edit_category', task_id=1) }}"> <!-- Replace task_id=1 with a valid task ID -->
-            <i class="fas fa-edit"></i> Muokkaa Kategoriaa
         </a>
         <a href="{{ url_for('auth.change_password') }}">
             <i class="fas fa-key"></i> Vaihda Salasana
@@ -24,4 +21,8 @@
             <i class="fas fa-sign-out-alt"></i> Kirjaudu Ulos
         </a>
     </div>
+</div>
+
+<div class="main-content" style="margin-left: 250px; padding: 20px;">
+    <!-- Your main content goes here -->
 </div>
