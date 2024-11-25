@@ -71,8 +71,7 @@ class User(UserMixin, db.Model):
     
     
     def is_administrator(self):
-        # Check if the user has the ADMIN permission
-        return self.role.permissions & Permission.ADMINISTER > 0
+        return self.is_admin  # Check if the user is an admin
    
 
 

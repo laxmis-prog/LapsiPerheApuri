@@ -37,6 +37,7 @@ def assign_task():
         if task:
             # Assign the task to the selected user
             task.user_id = form.user_id.data  # User receiving the task
+            task.status = request.form.get('task_status')
             task.assigned_to = form.user_id.data  # Explicitly set assigned_to
             task.assigned_by = current_user.id  # Set the current admin's ID as assigned_by
             
@@ -45,6 +46,9 @@ def assign_task():
             return redirect(url_for('admin.admin_dashboard'))
         else:
             flash('Tehtävää ei löytynyt.')
+
+    flash('Form validation failed.')
+    print(form.errors)  # Add this to print errors and help debug
 
     return render_template('admin/assign_task.html', form=form)
 

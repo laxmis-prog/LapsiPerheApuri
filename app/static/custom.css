@@ -130,6 +130,11 @@ footer a:hover {
   margin: 0; /* Make sure there's no margin around the sidebar */
 }
 
+/* Target admin-specific pages */
+.admin .content-container {
+  margin-left: 250px;
+}
+
 /* Sidebar links styling */
 .sidebar-custom a {
   color: white;
@@ -158,13 +163,8 @@ footer a:hover {
 .content-container {
   margin-left: 250px; /* Matches sidebar width */
   padding: 20px;
-  width: calc(100% - 250px); /* Adjust content width */
 }
 
-
-
-
- 
 /*dashboard*/
 .status-button {
   margin-bottom: 10px; /* Adjust the value as needed */
@@ -197,13 +197,31 @@ input[type="file"]::file-selector-button {
   height: 56px;  /* Set the navbar height to a fixed value */
 }
 
-/* Resize the logo and adjust vertical position */
+/* Styling for the logo */
 .navbar-logo {
   width: 290px;  /* Adjust the logo width */
-  height: auto; /* Maintain aspect ratio */
-  margin-right: 3px; /* Very small space between the logo and text */
-  margin-top: 12px; /* Lower the logo to reveal the ears */
+  height: auto;  /* Maintain aspect ratio */
+  margin-top: 20px;    /* Adjust the vertical position of the logo */
+  margin-right: auto;
+  margin-left: -105px;
 }
+
+/* Ensure the logo has no margin and is positioned correctly */
+.logo-container {
+  margin-bottom: 0;  /* No bottom margin for logo */
+}
+
+/* Adjust the logo size (optional) */
+.navbar-logo {
+  width: 200px;  /* You can adjust the size of the logo here */
+}
+
+/* Remove space between logo and card */
+.card {
+  margin-top: -85px;  /* Pull the card up to the logo */
+}
+
+
 
 /* Optional: Adjust navbar padding */
 .navbar {
@@ -227,3 +245,11 @@ input[type="file"]::file-selector-button {
   display: block;
   margin: 0 auto; /* Center the logo horizontally */
 }
+
+/* Styling for the navbar text */
+.navbar-text {
+  font-size: 1.5rem;  /* Adjust text size as needed */
+  font-weight: bold;  /* Make the text bold */
+  margin-top: 20px;   /* Adjust the vertical alignment */
+}
+
