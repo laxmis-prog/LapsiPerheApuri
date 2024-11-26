@@ -47,9 +47,6 @@ def assign_task():
         else:
             flash('Tehtävää ei löytynyt.')
 
-    flash('Form validation failed.')
-    print(form.errors)  # Add this to print errors and help debug
-
     return render_template('admin/assign_task.html', form=form)
 
 

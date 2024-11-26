@@ -51,7 +51,7 @@ body {
 
 /* Footer color */
 footer {
-  background-color: #FFF3B0; /* Slightly darker shade of light yellow */
+  background-color:#B2F1E6 ; /* Slightly darker shade of light yellow */
   color: #333333; /* Dark Gray for text */
   padding: 10px 0;
   text-align: center;
@@ -188,7 +188,7 @@ input[type="file"]::file-selector-button {
   text-align: center;
 }
 
-/* logo */
+/* logo in nav-bar */
 
 /* Ensure the navbar text and logo are aligned */
 .navbar-brand {
@@ -203,7 +203,7 @@ input[type="file"]::file-selector-button {
   height: auto;  /* Maintain aspect ratio */
   margin-top: 20px;    /* Adjust the vertical position of the logo */
   margin-right: auto;
-  margin-left: -105px;
+  margin-left: -85px;
 }
 
 /* Ensure the logo has no margin and is positioned correctly */
@@ -213,7 +213,7 @@ input[type="file"]::file-selector-button {
 
 /* Adjust the logo size (optional) */
 .navbar-logo {
-  width: 200px;  /* You can adjust the size of the logo here */
+  width: 300px;  /* You can adjust the size of the logo here */
 }
 
 /* Remove space between logo and card */
@@ -252,4 +252,73 @@ input[type="file"]::file-selector-button {
   font-weight: bold;  /* Make the text bold */
   margin-top: 20px;   /* Adjust the vertical alignment */
 }
+
+/* Adjust the logo size specifically for the registration page */
+.registration-logo {
+  width: 400px;
+  height: auto;  /* Maintain aspect ratio */
+  margin: 20px auto;  /* Center it horizontally and add vertical spacing */
+  display: block;  /* Ensure it is centered */
+}
+
+/* Logo styling specifically for the login page */
+.login-logo {
+  width: 400px;  /* Adjust the logo size as needed */
+  height: auto;  /* Maintain aspect ratio */
+  margin: 0 auto 20px auto;  /* Center it horizontally and add vertical spacing */
+  display: block;  /* Ensure it is centered */
+}
+
+
+
+/* Feedback Section Styles INDEX.HTML */
+.feedback-section {
+  padding: 40px 20px;
+}
+
+/* Feedback Card Style */
+.feedback-card {
+  width: 100%; /* Responsive to parent column width */
+  max-width: 350px; /* Ensure cards don’t get too wide */
+  height: 300px; /* Fixed height for consistent size */
+  background-color: #FFF3B0; /* Warm yellow background */
+  border-radius: 10px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.feedback-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.feedback-text {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: #444; /* Neutral dark text */
+}
+
+.stars {
+  color: #FFD700; /* Gold stars */
+  font-size: 1.5rem;
+}
+
+.customer-name {
+  font-size: 1rem;
+  color: #555;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .feedback-card {
+    height: auto; /* Allow height to adjust on smaller screens */
+    max-width: 100%; /* Take full width of parent column */
+  }
+}
+
 
