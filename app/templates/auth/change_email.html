@@ -9,8 +9,12 @@
 {% block page_content %}
 <div class="d-flex align-items-center justify-content-center py-4 bg-body-tertiary" style="height: 100vh;">
     <div class="w-100" style="max-width: 380px;">
+        <!-- Logo Section at the top of the card -->
+        <div class="text-center mb-4">
+            <img src="{{ url_for('static', filename='images/APURI.png') }}" alt="Logo" class="login-logo">
+        </div>
         <!-- Form Section -->
-        <div class="card shadow-sm">
+        <div class="card">
             <div class="card-body">
                 <h1 class="h3 mb-4 text-center fw-bold">Vaihda sähköpostiosoite</h1>
                 <form method="POST" action="{{ url_for('auth.change_email', token=token) }}">

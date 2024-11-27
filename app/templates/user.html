@@ -2,42 +2,41 @@
 
 {% block content %}
 <div class="container mt-4">
-    <div class="row">
-        <div class="col-md-8 offset-md-2">
-            <div class="card">
-                <div class="card-header">
-                    <h2>{{ user.username }}'s Profile</h2>
-                </div>
-                <div class="card-body text-center">
-                    <!-- Display the profile picture, default if not uploaded -->
-                    {% if user.profile_picture %}
-                        <img src="{{ url_for('static', filename=user.profile_picture) }}" 
-                        class="img-thumbnail rounded-circle" alt="Profile Picture" width="150" height="150">
-                    {% else %}
-                        <img src="{{ url_for('static', filename='default.png') }}" 
-                        class="img-thumbnail rounded-circle" alt="Default Profile Picture" width="150" height="150">
-                    {% endif %}
+    <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-4 bg-light-gradient">
+        <div class="col-lg-12 p-3 p-lg-5 pt-lg-3">
+            <h2 class="display-4 fw-bold lh-1 mb-4 text-center">{{ user.username }}n Profiili</h2>
 
-                    <p>
-                        {% if user.name %}{{ user.name }}{% endif %}
-                        {% if user.location %}
-                            from <a href="http://maps.google.com/?q={{ user.location }}">{{ user.location }}</a>
-                        {% endif %}
-                    </p>
-                    
-                    {% if user.about_me %}
-                    <p>{{ user.about_me }}</p>
+            <div class="text-center">
+                <!-- Profile Picture -->
+                {% if user.profile_picture %}
+                    <img src="{{ url_for('static', filename=user.profile_picture) }}" 
+                         class="img-thumbnail rounded-circle mb-3" 
+                         alt="Profile Picture" width="150" height="150">
+                {% else %}
+                    <img src="{{ url_for('static', filename='default.png') }}" 
+                         class="img-thumbnail rounded-circle mb-3" 
+                         alt="Default Profile Picture" width="150" height="150">
+                {% endif %}
+
+                <p class="lead">
+                    {% if user.name %}<strong>{{ user.name }}</strong>{% endif %}
+                    {% if user.location %}
+                        kotoisin <a href="http://maps.google.com/?q={{ user.location }}">{{ user.location }}</a>
                     {% endif %}
-                    
-                    <p>Member since: {{ user.member_since }}</p>
-                    <p>Last seen: {{ user.last_seen }}</p>
-                    
-                    <p>
-                        {% if user == current_user %}
-                        <a class="btn btn-default" href="{{ url_for('main.edit_profile') }}">Edit Profile</a>
-                        {% endif %}
-                    </p>
-                </div>
+                </p>
+
+                {% if user.about_me %}
+                    <p><em>{{ user.about_me }}</em></p>
+                {% endif %}
+
+                <p><strong>Jäsen lähtien:</strong> {{ user.member_since }}</p>
+                <p><strong>Viimeksi nähty:</strong> {{ user.last_seen }}</p>
+
+                {% if user == current_user %}
+                    <a class="btn btn-primary d-inline-flex align-items-center" href="{{ url_for('main.edit_profile') }}">
+                        <i class="fas fa-edit me-2"></i>Muokkaa Profiili
+                    </a>
+                {% endif %}
             </div>
         </div>
     </div>
