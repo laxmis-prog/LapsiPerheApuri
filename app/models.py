@@ -42,7 +42,7 @@ class Task(db.Model):
     due_date = db.Column(db.DateTime, nullable=True)
     time = db.Column(db.Time, nullable=False)
     category = db.Column(db.Enum('lääkäri', 'koulu', 'yksityinen'), default='yksityinen')
-    status = db.Column(db.String(64), default='pending')
+    status = db.Column(db.String(64), default='odottaa')
     user_id = db.Column(db.Integer, db.ForeignKey('users.id')) 
     member_name = db.Column(db.String(64), nullable=True)
 

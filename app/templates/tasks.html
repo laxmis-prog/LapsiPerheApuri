@@ -10,11 +10,11 @@
             <form method="POST" action="{{ url_for('main.tasks') }}">
                 {{ form.hidden_tag() }}
                 <div class="form-group">
-                    {{ form.member_name.label(class="form-label") }}  <!-- Translated Member Name -->
+                    {{ form.member_name.label(class="form-label") }}  
                     {{ form.member_name(class="form-control") }}
                 </div>
                 <div class="form-group">
-                    {{ form.title.label(class="form-label") }}  <!-- Translated Title -->
+                    {{ form.title.label(class="form-label") }}  
                     {{ form.title(class="form-control") }}
                 </div>
                 <div class="form-group">
@@ -22,23 +22,23 @@
                     {{ form.description(class="form-control") }}
                 </div>
                 <div class="form-group">
-                    {{ form.due_date.label(class="form-label") }}  <!-- Translated Due Date -->
+                    {{ form.due_date.label(class="form-label") }} 
                     {{ form.due_date(class="form-control", type="date") }}
                 </div>
                 <div class="form-group">
-                    {{ form.time.label(class="form-label") }}  <!-- Translated Time -->
+                    {{ form.time.label(class="form-label") }}  
                     {{ form.time(class="form-control", type="time") }}
                 </div>
                 <div class="form-group">
-                    {{ form.category.label(class="form-label") }}  <!-- Translated Category -->
+                    {{ form.category.label(class="form-label") }}  
                     {{ form.category(class="form-control") }}
                 </div>
                 <div class="form-group">
-                    {{ form.status.label(class="form-label") }}  <!-- Translated Status -->
+                    {{ form.status.label(class="form-label") }} 
                     {{ form.status(class="form-control") }}
                 </div>
                 <div class="form-group">
-                    {{ form.submit(class="btn btn-primary") }}  <!-- Translated Submit -->
+                    {{ form.submit(class="btn btn-primary") }}  
                 </div>
             </form>
         </div>
@@ -57,20 +57,23 @@
             <ul class="list-group">
                 {% for task in tasks %}
                 <li class="list-group-item">
-                    <h5><strong><u>{{ task.title }}</u></strong></h5>  <!-- Bold and Underlined Title -->
-                    <p><strong>Jäsenen nimi:</strong> {{ task.member_name }}</p>  <!-- Bold Member Name -->
-                    <p><strong>Kuvaus:</strong> {{ task.description }}</p>  <!-- Bold Description -->
-                    <p><strong>Eräpäivä:</strong> {{ task.due_date }}</p>  <!-- Bold Due Date -->
-                    <p><strong>Aika:</strong> {{ task.time }}</p>  <!-- Bold Time -->
-                    <p><strong>Kategoria:</strong> {{ task.category }}</p>  <!-- Bold Category -->
-                    <p><strong>Tila:</strong> {{ task.status }}</p>  <!-- Bold Status -->
+                    <h5><strong><u>{{ task.title }}</u></strong></h5>  
+                    <p><strong>Jäsenen nimi:</strong> {{ task.member_name }}</p>  
+                    <p><strong>Kuvaus:</strong> {{ task.description }}</p>  
+                    <p><strong>Eräpäivä:</strong> {{ task.due_date }}</p>  
+                    <p><strong>Aika:</strong> {{ task.time }}</p>  
+                    <p><strong>Kategoria:</strong> {{ task.category }}</p>  
+                    <p><strong>Tila:</strong> {{ task.status }}</p> 
                     <form method="POST" action="{{ url_for('main.update_task_status', task_id=task.task_id) }}">
-                        <input type="hidden" name="status" value="{{ 'completed' if task.status == 'pending' else 'pending' }}">
-                        <button type="submit" class="btn btn-secondary status-button">{{ 'Merkitse suoritetuksi' if task.status == 'pending' else 'Merkitse odottavaksi' }}</button>  <!-- Translated Button -->
+                        <input type="hidden" name="status" value="{{ 'suoritettu' if task.status == 'odottaa' else 'odottaa' }}">
+                        <button type="submit" 
+                        class="btn {{ 'btn-success' if task.status == 'odottaa' else 'btn-warning' }} status-button">
+                    {{ 'Merkitse suoritetuksi' if task.status == 'odottaa' else 'Merkitse odottavaksi' }}
+                </button>
                     </form>
-                    <a href="{{ url_for('main.edit_task', task_id=task.task_id) }}" class="btn btn-primary">Muokkaa</a>  <!-- Translated Edit -->
+                    <a href="{{ url_for('main.edit_task', task_id=task.task_id) }}" class="btn btn-primary">Muokkaa</a>  
                     <form method="POST" action="{{ url_for('main.delete_task', task_id=task.task_id) }}" style="display:inline;">
-                        <button type="submit" class="btn btn-danger">Poista</button>  <!-- Translated Delete -->
+                        <button type="submit" class="btn btn-danger">Poista</button>  
                     </form>
                 </li>
                 {% endfor %}

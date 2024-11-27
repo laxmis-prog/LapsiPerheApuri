@@ -30,7 +30,7 @@ def tasks():
         db.session.add(task)
         try:
             db.session.commit()  # Attempt to commit to the database
-            flash('Task created successfully.')
+            flash('Tehtävä on lisätty')
             return redirect(url_for('main.tasks'))
         except Exception as e:
             db.session.rollback()  # Roll back if there's an error
@@ -58,9 +58,9 @@ def edit_task(task_id):
         task.status = form.status.data
         task.member_name = form.member_name.data
         db.session.commit()
-        flash('Task updated successfully.')
+        flash('Tehtävä on päivitetty.')
         return redirect(url_for('main.tasks'))
-    return render_template('edit_task.html', form=form, task=task)
+    return render_template('edit_tasks.html', form=form, task_id=task.task_id)
 
 
 @main.route('/tasks/delete/<int:task_id>', methods=['POST'])

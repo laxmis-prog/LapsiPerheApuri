@@ -2,28 +2,44 @@
 
 {% block content %}
 <div class="container mt-4">
-    <h2>Edit Task</h2>
-    <form method="POST" action="{{ url_for('main.edit_task', id=task.id) }}">
-        {{ form.hidden_tag() }}
-        <div class="form-group">
-            {{ form.title.label(class="form-label") }}
-            {{ form.title(class="form-control") }}
+    <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-4 bg-light-gradient">
+        <div class="col-lg-12 p-3 p-lg-5 pt-lg-3">
+            <h2 class="display-4 fw-bold lh-1 welcome-text mb-4">Muokkaa tehtävää</h2>
+            <form method="POST" action="{{ url_for('main.edit_task', task_id=task_id) }}">
+                {{ form.hidden_tag() }}
+                <div class="form-group">
+                    {{ form.member_name.label(class="form-label") }}  <!-- Jäsenen nimi -->
+                    {{ form.member_name(class="form-control") }}
+                </div>
+                <div class="form-group">
+                    {{ form.title.label(class="form-label") }}  <!-- Otsikko -->
+                    {{ form.title(class="form-control") }}
+                </div>
+                <div class="form-group">
+                    {{ form.description.label(class="form-label") }}  <!-- Kuvaus -->
+                    {{ form.description(class="form-control") }}
+                </div>
+                <div class="form-group">
+                    {{ form.due_date.label(class="form-label") }}  <!-- Eräpäivä -->
+                    {{ form.due_date(class="form-control", type="date") }}
+                </div>
+                <div class="form-group">
+                    {{ form.time.label(class="form-label") }}  <!-- Aika -->
+                    {{ form.time(class="form-control", type="time") }}
+                </div>
+                <div class="form-group">
+                    {{ form.category.label(class="form-label") }}  <!-- Kategoria -->
+                    {{ form.category(class="form-control") }}
+                </div>
+                <div class="form-group">
+                    {{ form.status.label(class="form-label") }}  <!-- Tila -->
+                    {{ form.status(class="form-control") }}
+                </div>
+                <div class="form-group">
+                    {{ form.submit(class="btn btn-primary") }}  <!-- Tallenna -->
+                </div>
+            </form>
         </div>
-        <div class="form-group">
-            {{ form.description.label(class="form-label") }}
-            {{ form.description(class="form-control") }}
-        </div>
-        <div class="form-group">
-            {{ form.due_date.label(class="form-label") }}
-            {{ form.due_date(class="form-control") }}
-        </div>
-        <div class="form-group">
-            {{ form.status.label(class="form-label") }}
-            {{ form.status(class="form-control") }}
-        </div>
-        <div class="form-group">
-            {{ form.submit(class="btn btn-primary") }}
-        </div>
-    </form>
+    </div>
 </div>
 {% endblock %}
