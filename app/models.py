@@ -46,10 +46,15 @@ class Task(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id')) 
     member_name = db.Column(db.String(64), nullable=True)
 
-    # Fields for admin assignments
-    assigned_by = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True)  # Admin ID or NULL
-    assigned_to = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True)  # Recipient ID
-    
+    # Define relationships to User model
+    assigned_by = db.Column(db.Integer, db.ForeignKey('users.id'))
+    assigned_to = db.Column(db.Integer, db.ForeignKey('users.id'))
+    assigned_by_user = db.relationship('User', foreign_keys=[assigned_by], backref='tasks_assigned')
+    assigned_to_user = db.relationship('User', foreign_keys=[assigned_to], backref='tasks_received')
+
+   # New field to store the assignment time
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
 
     def __repr__(self):
         return f'<Task {self.title}>'

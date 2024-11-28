@@ -1,6 +1,7 @@
 from flask import render_template, redirect, url_for, flash, request
 from flask_login import login_required, current_user
 from . import admin
+from ..main import main
 from .. import db
 from ..models import Task, Feedback, User
 from .forms import AssignTaskForm
@@ -49,6 +50,10 @@ def assign_task():
 
     return render_template('admin/assign_task.html', form=form)
 
-
+@admin.route('/admin/all_tasks')
+@login_required
+def all_tasks():
+    tasks = Task.query.all()
+    return render_template('admin/all_tasks.html', tasks=tasks)
 
 

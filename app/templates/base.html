@@ -94,6 +94,12 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script>
+        document.getElementById('view-tasks-icon').addEventListener('click', function(event) {
+            event.preventDefault();
+            document.getElementById('tasks-section').style.display = 'block';
+        });
+    </script>
     {% block scripts %}
     {% endblock %}
 </body>

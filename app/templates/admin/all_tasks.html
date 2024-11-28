@@ -1,0 +1,59 @@
+<!-- templates/all_tasks.html -->
+{% extends "base.html" %}
+{% set hide_navbar = true %}
+{% set hide_footer = true %}
+
+{% block title %}Kaikki Tehtävät{% endblock %}
+
+{% block page_content %}
+<div class="container mt-4">
+    <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-4 bg-light-gradient">
+        <div class="col-lg-12 p-3 p-lg-5 pt-lg-3">
+            <h2 class="display-5 fw-bold lh-1 text-primary mb-4">Kaikki Tehtävät</h2>
+            <div class="card-body">
+                <!-- Task Management -->
+                <h3>Tehtävät</h3>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Tehtävän antaja</th>
+                                <th>Jäsenen nimi</th>
+                                <th>Otsikko</th>
+                                <th>Kuvaus</th>
+                                <th>Eräpäivä</th>
+                                <th>Luotu</th>
+                                <th>Toiminnot</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for task in tasks %}
+                            <tr>
+                                <td>{{ task.assigned_by_user.username if task.assigned_by_user else 'Ei tiedossa' }}</td>
+                                <td>{{ task.member_name }}</td>
+                                <td>{{ task.title }}</td>
+                                <td>{{ task.description }}</td>
+                                <td>{{ task.due_date }} {{ task.time.strftime('%H:%M') }}</td>
+                                <td>{{ task.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                                <td class="d-flex">
+                                    <!-- Edit Button -->
+                                    <a href="{{ url_for('main.edit_task', task_id=task.task_id) }}" class="btn btn-warning btn-sm me-2" title="Muokkaa tehtävää">
+                                        <i class="bi bi-pencil-square"></i> Muokkaa
+                                    </a>
+                                    <!-- Delete Button -->
+                                    <form method="POST" action="{{ url_for('main.delete_task', task_id=task.task_id) }}" style="display:inline;">
+                                        <button type="submit" class="btn btn-danger btn-sm" title="Poista tehtävä">
+                                            <i class="bi bi-trash-fill"></i> Poista
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
