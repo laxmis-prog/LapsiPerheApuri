@@ -8,17 +8,17 @@
 
 {% block page_content %}
 <!-- Wrapper to center the card with equal space at top, bottom, and sides -->
-<div class="container-fluid d-flex align-items-center justify-content-center min-vh-100 p-0"> <!-- Ensures full page height with padding removed -->
+<div class="d-flex justify-content-center"> <!-- Ensures full page height with padding removed -->
     <div class="w-100" style="max-width: 380px;">
 
         <!-- Logo Section Outside Card -->
-<div class="text-center logo-container" style="margin-bottom: 0;"> <!-- Adjusted margin to 0 for logo -->
-    <!-- Increased logo size -->
-    <img src="{{ url_for('static', filename='images/APURI.png') }}" alt="Logo" class="registration-logo">
-</div>
+        <div class="text-center logo-container" style="margin-top: -150px"> <!-- Adjusted margin to 0 for logo -->
+            <!-- Increased logo size -->
+            <img src="{{ url_for('static', filename='images/APURI.png') }}" alt="Logo" class="registration-logo">
+        </div>
 
         <!-- Form Section -->
-        <div class="card shadow-sm">
+        <div class="card shadow-sm" style="margin-top: -150px">
             <div class="card-body">
 
                <h1 class="h3 mb-4 text-center fw-bold">Rekisteröidy</h1>
