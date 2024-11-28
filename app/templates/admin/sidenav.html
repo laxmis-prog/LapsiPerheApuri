@@ -6,6 +6,13 @@
         <a href="{{ url_for('admin.admin_dashboard') }}">
             <i class="fas fa-tachometer-alt"></i> Hallintapaneeli
         </a>
+
+         <div style="margin-left: 20px;">
+            <a href="{{ url_for('admin.users') }}">
+                <i class="fas fa-users"></i> Käyttäjät
+            </a>
+        </div>
+
         <a href="{{ url_for('admin.all_tasks') }}">
             <i class="fas fa-calendar-check"></i> Kaikki Tehtävät
         </a>

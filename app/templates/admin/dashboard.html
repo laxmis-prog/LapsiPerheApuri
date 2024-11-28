@@ -8,17 +8,44 @@
         {% include 'admin/sidenav.html' %}
     </div>
 
-  <!-- Add the Button Here -->
-<div class="mt-4 text-center">
-    <a href="{{ url_for('admin.all_tasks') }}" class="btn btn-info btn-lg px-5 py-3 d-flex align-items-center justify-content-center shadow-sm rounded-pill hover-shadow-lg">
-        <i class="bi bi-calendar-check-circle-fill" style="font-size: 30px; margin-right: 10px;"></i> 
-        Kaikki tulevat tehtävät yhdestä paikasta, klikkaa tästä
-    </a>
-</div>
+    <!-- Main Content -->
+<div class="content-container flex-grow-1">
+    <div class="col-lg-12">
+        <div class="row justify-content-start"> <!-- Align to the left -->
+            <!-- First Card -->
+            <div class="col-6 col-sm-4 col-md-3 mb-3">
+                <div class="card text-white bg-primary small" style="min-height: 120px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                    <div class="card-body p-3 text-center">
+                        <h6 class="card-title fw-normal mb-1">Käyttäjiä yhteensä</h6>
+                        <p class="card-text fs-6 mb-0">{{ total_users }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Second Card -->
+            <div class="col-6 col-sm-4 col-md-3 mb-3">
+                <div class="card text-white bg-success small" style="min-height: 120px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                    <div class="card-body p-3 text-center">
+                        <h6 class="card-title fw-normal mb-1">Aktiivisia käyttäjiä</h6>
+                        <p class="card-text fs-6 mb-0">{{ active_users }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Third Card -->
+            <div class="col-6 col-sm-4 col-md-3 mb-3">
+                <div class="card text-white bg-info small" style="min-height: 120px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                    <div class="card-body p-3 text-center">
+                        <h6 class="card-title fw-normal mb-1">Tehtäviä yhteensä</h6>
+                        <p class="card-text fs-6 mb-0">{{ total_tasks }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
-    <!-- Main Content -->
-    <div class="content-container flex-grow-1">
+
         <!-- Welcome Section -->
         <div class="welcome-card row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center bg-light-gradient mb-4">
             <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
@@ -44,9 +71,12 @@
             </div>
         </div>
 
+        <!-- Add the Button Here -->
+        <div class="mt-4 text-center">
+            <a href="{{ url_for('admin.all_tasks') }}" class="btn btn-info btn-lg px-5 py-3 d-flex align-items-center justify-content-center shadow-sm rounded-pill hover-shadow-lg">
+                <i class="bi bi-calendar-check-circle-fill" style="font-size: 30px; margin-right: 10px;"></i> 
+                Kaikki tulevat tehtävät yhdestä paikasta, klikkaa tästä
+            </a>
+        </div>
     </div>
-</div>
-</div>
-
 {% endblock %}
-                

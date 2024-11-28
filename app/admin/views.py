@@ -12,9 +12,18 @@ def admin_dashboard():
     if not current_user.is_administrator():
         flash('Sinulla ei ole oikeuksia nähdä tätä sivua.')
         return redirect(url_for('main.index'))
+
+    # Fetch statistics
+    total_users = User.query.count()
+    total_tasks = Task.query.count()
+    active_users = User.query.filter_by(confirmed=True).count()
+
     tasks = Task.query.all()
     feedbacks = Feedback.query.all()
-    return render_template('admin/dashboard.html', tasks=tasks, feedbacks=feedbacks)
+
+    return render_template('admin/dashboard.html', tasks=tasks, feedbacks=feedbacks, 
+                           total_users=total_users, total_tasks=total_tasks, active_users=active_users)
+
 
 
 @admin.route('/assign_task', methods=['GET', 'POST'])
@@ -55,5 +64,19 @@ def assign_task():
 def all_tasks():
     tasks = Task.query.all()
     return render_template('admin/all_tasks.html', tasks=tasks)
+
+@admin.route('/users')
+@login_required
+def users():
+    if not current_user.is_administrator():
+        flash('Sinulla ei ole oikeuksia nähdä tätä sivua.')
+        return redirect(url_for('main.index'))
+
+    # Fetch all users and active users
+    all_users = User.query.all()
+    active_users = User.query.filter_by(confirmed=True).all()
+
+    return render_template('admin/users.html', all_users=all_users, active_users=active_users)
+
 
 

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Käyttäjät{% endblock %}
+
+{% block page_content %}
+<div class="container mt-5">
+    <h1 class="mb-4 text-primary">Käyttäjät</h1>
+
+    <h2 class="mt-4">Käyttäjiä yhteensä: {{ all_users|length }}</h2>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Käyttäjänimi</th>
+                <th>Sähköposti</th>
+                <th>Rekisteröintipäivä</th>
+                <th>Tila</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in all_users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.username }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.member_since.strftime('%Y-%m-%d') if user.member_since else 'Ei rekisteröity päivämäärää' }}</td>
+                <td>{{ 'Aktiivinen' if user.confirmed else 'Ei aktiivinen' }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h2 class="mt-4">Aktiivisia käyttäjiä: {{ active_users|length }}</h2>
+    <ul class="list-group">
+        {% for user in active_users %}
+        <li class="list-group-item">
+            {{ user.username }} - {{ user.email }}
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
