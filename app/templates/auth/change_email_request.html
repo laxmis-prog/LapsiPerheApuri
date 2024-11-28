@@ -7,10 +7,15 @@
 {% block title %}Apuri - Vaihda sähköpostiosoite{% endblock %}
 
 {% block page_content %}
-<div class="d-flex align-items-center justify-content-center py-4 bg-body-tertiary" style="height: 100vh;">
+<div class="d-flex justify-content-center bg-body-tertiary">
     <div class="w-100" style="max-width: 380px;">
+        <!-- Logo Section at the top of the card -->
+        <div class="text-center" style="margin-top: -150px;">
+            <img src="{{ url_for('static', filename='images/APURI.png') }}" alt="Logo" class="login-logo">
+        </div>
+
         <!-- Form Section -->
-        <div class="card shadow-sm">
+        <div class="card shadow-sm" style="margin-top: -150px">
             <div class="card-body">
                 <h1 class="h3 mb-4 text-center fw-bold">Vaihda sähköpostiosoite</h1>
                 

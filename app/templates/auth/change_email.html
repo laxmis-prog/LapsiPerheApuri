@@ -1,4 +1,3 @@
-<!-- templates/change_email.html -->
 {% extends "base.html" %}
 {% set hide_navbar = true %}
 {% set hide_footer = true %}
@@ -7,27 +6,44 @@
 {% block title %}Apuri - Vaihda sähköpostiosoite{% endblock %}
 
 {% block page_content %}
-<div class="d-flex align-items-center justify-content-center py-4 bg-body-tertiary" style="height: 100vh;">
+<div class="d-flex justify-content-center py-4 bg-body-tertiary">
     <div class="w-100" style="max-width: 380px;">
-        <!-- Logo Section at the top of the card -->
-        <div class="text-center mb-4">
-            <img src="{{ url_for('static', filename='images/APURI.png') }}" alt="Logo" class="login-logo">
-        </div>
         <!-- Form Section -->
-        <div class="card">
+        <div class="card shadow-sm" style="margin-top: -150px;">
             <div class="card-body">
                 <h1 class="h3 mb-4 text-center fw-bold">Vaihda sähköpostiosoite</h1>
                 <form method="POST" action="{{ url_for('auth.change_email', token=token) }}">
-                    <div class="form-group">
+                    {{ form.hidden_tag() }}
+
+                    <!-- Email Field -->
+                    <div class="form-group mb-3">
                         {{ form.email.label(class="form-label") }}
-                        {{ form.email(class="form-control") }}
+                        {{ form.email(class="form-control", placeholder="Uusi sähköpostiosoite") }}
+                        {% if form.email.errors %}
+                        <div class="text-danger">
+                            {% for error in form.email.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
                     </div>
-                    <div class="form-group">
+
+                    <!-- Password Field -->
+                    <div class="form-group mb-3">
                         {{ form.password.label(class="form-label") }}
-                        {{ form.password(class="form-control") }}
+                        {{ form.password(class="form-control", placeholder="Nykyinen salasana") }}
+                        {% if form.password.errors %}
+                        <div class="text-danger">
+                            {% for error in form.password.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
                     </div>
-                    <div class="form-group">
-                        {{ form.submit(class="btn btn-primary w-100") }}
+
+                    <!-- Submit Button -->
+                    <div class="form-group mb-3">
+                        {{ form.submit(class="btn btn-primary w-100 py-2") }}
                     </div>
                 </form>
             </div>
